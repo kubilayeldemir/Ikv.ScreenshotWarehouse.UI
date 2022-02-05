@@ -6,7 +6,7 @@
         <b-col>
           <div class="text-capitalize text-monospace shadow-lg bg-dark-50">
             Ikv SS Deposu <br>
-            Made with ❤
+            Made with <span style="color: red">❤</span>
           </div>
         </b-col>
         <b-col></b-col>

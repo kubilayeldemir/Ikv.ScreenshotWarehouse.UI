@@ -1,6 +1,7 @@
 <template>
-  <div class="bg-dark text-white">
+  <div class="bg-dark text-white" style=";">
     <Nuxt/>
+
   </div>
 </template>
 
@@ -23,5 +24,10 @@ export default {
 </script>
 
 <style scoped>
+
+</style>
+
+
+<style>
 
 </style>
