@@ -1,18 +1,33 @@
 <template>
-<div class="">Latest Posts
-  <b-container class="" style="max-width: 100%">
-    <b-row class="" v-for="i in 1">
-      <b-col v-for="i in 1" class="col-12 col-md-6 col-lg-4 col-xl-3">
-        <post-card class="my-3"></post-card>
-      </b-col>
-    </b-row>
-  </b-container>
-</div>
+  <div>
+    <div class="p-5">
+      <Stack :monitor-images-loaded="true" :column-min-width="320" :gutter-width="4" :gutter-height="4">
+        <StackItem v-for="(post,i) in posts" :key="i">
+          <post-card :post="post"></post-card>
+        </StackItem>
+      </Stack>
+    </div>
+  </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "index"
+  name: "index",
+  data() {
+    return {
+      posts: []
+    }
+  },
+  async created() {
+    try {
+      const res = await axios.get('https://localhost:5001/api/v1/post/all');
+      this.posts = res.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
 }
 </script>
 

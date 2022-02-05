@@ -1,7 +1,6 @@
 <template>
-  <div class="bg-dark text-white" style=";">
+  <div class="bg-dark text-white" style="height: 100%; min-height: 100vh; min-width: 100vw">
     <Nuxt/>
-
   </div>
 </template>
 
@@ -10,8 +9,8 @@ export default {
   name: "default",
   head() {
     return {
-      title:"İstanbul Kıyamet Vakti SS Deposu",
-      meta:[
+      title: "İstanbul Kıyamet Vakti SS Deposu",
+      meta: [
         {
           hid: "İkv SS Deposu",
           name: "İkv SS Deposu",
