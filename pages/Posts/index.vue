@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="p-5">
-      <Stack :monitor-images-loaded="true" :column-min-width="320" :gutter-width="4" :gutter-height="4">
+      <Stack :column-min-width="320" :gutter-width="4" :gutter-height="4">
         <StackItem v-for="(post,i) in posts" :key="i">
           <post-card :post="post"></post-card>
         </StackItem>
