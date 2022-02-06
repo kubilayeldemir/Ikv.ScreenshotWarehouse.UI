@@ -1,4 +1,7 @@
 export default {
+  env: {
+    apiUrl: process.env.API_URL
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Ikv.ScreenshotWarehouse.UI',

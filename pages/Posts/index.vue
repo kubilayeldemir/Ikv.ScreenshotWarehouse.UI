@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="p-5">
-      <Stack :column-min-width="320" :gutter-width="4" :gutter-height="4">
+      <Stack :monitor-images-loaded="true" :column-min-width="320" :gutter-width="4" :gutter-height="4">
         <StackItem v-for="(post,i) in posts" :key="i">
           <post-card :post="post"></post-card>
         </StackItem>
@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import axios from "axios";
+
+import {api} from "@/utils/api";
 
 export default {
   name: "index",
@@ -22,7 +23,7 @@ export default {
   },
   async created() {
     try {
-      const res = await axios.get('https://localhost:5001/api/v1/post/all');
+      const res = await api.get('/post/all');
       this.posts = res.data
     } catch (e) {
       console.log(e)
