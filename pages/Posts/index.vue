@@ -1,5 +1,6 @@
 <template>
   <div>
+    <no-ssr>
     <div class="p-5">
       <Stack :monitor-images-loaded="true" :column-min-width="320" :gutter-width="4" :gutter-height="4">
         <StackItem v-for="(post,i) in posts" :key="i">
@@ -7,6 +8,7 @@
         </StackItem>
       </Stack>
     </div>
+    </no-ssr>
   </div>
 </template>
 
