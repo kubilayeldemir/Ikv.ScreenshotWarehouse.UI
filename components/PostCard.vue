@@ -1,6 +1,6 @@
 <template>
   <div class="border border-secondary">
-    <img class="img" :src="post.fileUrl"/>
+    <img loading=lazy class="img" :src="post.fileUrl"/>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
 .img {
   height: 100%;
   width: 100%;
-  max-height: 50vh;
+  max-height: 80vh;
   min-width: 320px;
   object-fit: cover;
 }

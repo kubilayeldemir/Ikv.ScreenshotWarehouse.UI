@@ -1,13 +1,12 @@
 <template>
   <div>
     <no-ssr>
-    <div class="p-5">
+      <LightGallery :images="postsNew" :index="index" @close="index = null"></LightGallery>
       <Stack :monitor-images-loaded="true" :column-min-width="320" :gutter-width="4" :gutter-height="4">
-        <StackItem v-for="(post,i) in posts" :key="i">
+        <StackItem v-for="(post,i) in posts" :key="i" @click.native="index=i">
           <post-card :post="post"></post-card>
         </StackItem>
       </Stack>
-    </div>
     </no-ssr>
   </div>
 </template>
@@ -18,9 +17,13 @@ import {api} from "@/utils/api";
 
 export default {
   name: "index",
+  methods: {
+  },
   data() {
     return {
-      posts: []
+      posts: [],
+      postsNew: [],
+      index: null
     }
   },
   async created() {
@@ -28,6 +31,7 @@ export default {
       try {
         const res = await api.get('/post/all');
         this.posts = res.data
+        this.postsNew = res.data.map(x => ({url: x.fileUrl, title: "asdasd", h: "768"}))
       } catch (e) {
         console.log(e)
       }
