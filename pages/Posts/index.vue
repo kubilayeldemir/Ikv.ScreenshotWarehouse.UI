@@ -22,11 +22,13 @@ export default {
     }
   },
   async created() {
-    try {
-      const res = await api.get('/post/all');
-      this.posts = res.data
-    } catch (e) {
-      console.log(e)
+    if (process.browser) {
+      try {
+        const res = await api.get('/post/all');
+        this.posts = res.data
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
