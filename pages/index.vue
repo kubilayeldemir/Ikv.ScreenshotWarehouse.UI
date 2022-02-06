@@ -1,5 +1,7 @@
 <template>
-  <div>Hello worldss</div>
+  <div>Hello worldss
+    <NuxtLink to="/posts">POSTS</NuxtLink></div>
+
 </template>
 
 <script>
