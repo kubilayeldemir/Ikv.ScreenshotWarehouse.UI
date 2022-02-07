@@ -17,8 +17,8 @@ export default {
 .img {
   height: 100%;
   width: 100%;
-  max-height: 80vh;
-  min-width: 320px;
+  max-height: 100vh;
+  max-width: 100vw;
   object-fit: cover;
 }
 </style>
