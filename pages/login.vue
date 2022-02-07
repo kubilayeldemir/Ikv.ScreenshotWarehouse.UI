@@ -3,21 +3,7 @@
     <div class="row col-10 col-lg-6 ml-3 pt-3">
       İkv Ss deposuna üye olmak için lütfen aşağıdaki alanları doldur.
       <hr/>
-      <b-form @submit="register" @reset="onReset" v-if="show" class="mt-3">
-        <b-form-group
-          id="input-group-1"
-          label="Email Adresi:"
-          label-for="input-1"
-          description="Mail adresin sadece şifreni unutursan kullanılacak."
-        >
-          <b-form-input
-            id="input-1"
-            v-model="form.email"
-            type="email"
-            placeholder="Email adresin"
-            required
-          ></b-form-input>
-        </b-form-group>
+      <b-form @submit="login" v-if="show" class="mt-3">
 
         <b-form-group
           id="input-group-1"
@@ -39,38 +25,38 @@
             type="password"
             id="input-2"
             v-model="form.password"
-            placeholder="Şifre 4 karakterden az olamaz"
+            placeholder="sifre"
             required
           ></b-form-input>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">Üye ol</b-button>
-        <b-button type="reset" variant="danger">Temizle</b-button>
+        <b-button type="submit" variant="primary">Giriş yap</b-button>
+
       </b-form>
       <!--      <b-card class="mt-3" header="Kontrol tahtasdı">-->
       <!--        <pre class="m-0">{{ form }}</pre>-->
       <!--      </b-card>-->
     </div>
+    <div class="row col-10 col-lg-6 ml-3 pt-3">
+      <nuxt-link to="/register">
+        <b-button type="reset" variant="danger">Üye olma sayfasına git</b-button>
+      </nuxt-link>
+    </div>
     <div>
-      <b-modal ref="my-modal" hide-footer title="Üye oldun!">
+      <b-modal ref="my-modal" hide-footer title="Giriş başarılı!">
         <div class="d-block text-center">
-          <h2>Başarılı şekilde üye oldun {{ this.form.username }}!</h2>
+          <h2>Başarılı şekilde giriş yaptın!</h2>
         </div>
         <b-button class="mt-3" variant="outline-danger" block @click="hideSuccessModal">Kapat</b-button>
       </b-modal>
-      <b-modal ref="error-modal" hide-footer title="Üye olma başarısız!">
+      <b-modal ref="error-modal" hide-footer title="Giriş başarısız!">
         <div class="d-block text-center">
-          <h2>Üye olurken bir hata oluştu!</h2>
+          <h2>Kullanıcı adı veya şifren yanlış!</h2>
           <br>
           <code>{{ this.errorText }}</code>
         </div>
         <b-button class="mt-3" variant="outline-danger" block @click="hideErrorModal">Kapat</b-button>
       </b-modal>
-    </div>
-    <div class="row col-10 col-lg-6 ml-3 pt-3">
-      <nuxt-link to="/login">
-        <b-button variant="info">Giriş yapma sayfasına git</b-button>
-      </nuxt-link>
     </div>
   </b-container>
 </template>
@@ -83,7 +69,6 @@ export default {
   data() {
     return {
       form: {
-        email: '',
         username: '',
         password: '',
       },
@@ -91,12 +76,11 @@ export default {
       errorText: ''
     }
   },
-  computed: {},
   methods: {
-    async register(event) {
+    async login(event) {
       event.preventDefault()
       try {
-        const res = await api.post('/user/register', this.form);
+        const res = await api.post('/user/login', this.form);
         if (res.status == 200) {
           this.showSuccessModal()
         } else {
@@ -109,17 +93,6 @@ export default {
 
       }
     },
-    onReset(event) {
-      event.preventDefault()
-      this.form.email = ''
-      this.form.password = ''
-      this.form.username = ''
-      this.show = false
-      this.errorText = ''
-      this.$nextTick(() => {
-        this.show = true
-      })
-    },
     showSuccessModal() {
       this.$refs['my-modal'].show()
     },
@@ -131,16 +104,11 @@ export default {
     },
     hideErrorModal() {
       this.$refs['error-modal'].hide()
-    },
+    }
   }
 }
 </script>
 
 <style scoped>
-hr {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border: 0;
-  border-top: 1px solid rgb(100, 201, 201);
-}
+
 </style>
