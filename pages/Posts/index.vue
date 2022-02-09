@@ -14,7 +14,7 @@
 
 <script>
 
-import {api} from "@/utils/api";
+import {getCookie} from "@/utils/api";
 
 export default {
   name: "index",
@@ -27,12 +27,17 @@ export default {
       index: null
     }
   },
-  async created() {
+  async mounted() {
     if (process.browser) {
       try {
-        const res = await api.get('/post/all');
-        this.posts = res.data
-        this.postsNew = res.data.map(x => ({url: x.fileUrl, title: "asdasd", h: "1200"}))
+        const res = await this.$axios.$get('/post/all',
+          {
+            headers: {
+              Authorization: 'Bearer ' + getCookie("jwt")
+            }
+          });
+        this.posts = res
+        this.postsNew = res.map(x => ({url: x.fileUrl, title: "no-title", h: "1200"}))
       } catch (e) {
         console.log(e)
       }

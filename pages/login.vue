@@ -63,6 +63,7 @@
 
 <script>
 import {api} from "@/utils/api";
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: "login",
@@ -76,21 +77,33 @@ export default {
       errorText: ''
     }
   },
+  computed: {
+    ...mapState([
+      'store/user'
+    ])
+  },
   methods: {
+    ...mapMutations(['store/loginUser']),
     async login(event) {
       event.preventDefault()
       try {
         const res = await api.post('/user/login', this.form);
         if (res.status == 200) {
-          this.showSuccessModal()
+          let d = new Date();
+          d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+          let expires = "expires=" + d.toUTCString();
+          document.cookie =
+            "jwt=" + res.data.jwt + ";" + expires + ";path=/";
+          this.$store.commit('store/loginUser', res.data.user)
+          // this.showSuccessModal()
+          this.$router.push('/')
         } else {
           this.showErrorModal()
         }
       } catch (err) {
         console.log(err)
         this.showErrorModal()
-        this.errorText = err.response.data.errors
-
+        this.errorText = err.response?.data?.errors
       }
     },
     showSuccessModal() {
