@@ -1,10 +1,13 @@
 <template>
   <div class="bg-dark text-white" style="height: 100%; min-height: 100vh; min-width: 100vw">
+    <p v-if="this.user != null">Hoşgeldin {{ this.user.username }}</p>
     <Nuxt/>
   </div>
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   name: "default",
   head() {
@@ -18,7 +21,11 @@ export default {
         }
       ]
     }
-  }
+  },
+  computed: {
+    ...mapState([
+      "user"])
+  },
 }
 </script>
 

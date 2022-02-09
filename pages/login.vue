@@ -79,11 +79,11 @@ export default {
   },
   computed: {
     ...mapState([
-      'store/user'
+      'user'
     ])
   },
   methods: {
-    ...mapMutations(['store/loginUser']),
+    ...mapMutations(['loginUser']),
     async login(event) {
       event.preventDefault()
       try {
@@ -94,7 +94,7 @@ export default {
           let expires = "expires=" + d.toUTCString();
           document.cookie =
             "jwt=" + res.data.jwt + ";" + expires + ";path=/";
-          this.$store.commit('store/loginUser', res.data.user)
+          this.$store.commit('loginUser', res.data.user)
           // this.showSuccessModal()
           this.$router.push('/')
         } else {
