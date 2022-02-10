@@ -20,19 +20,19 @@
 </template>
 
 <script>
-import {getCookie} from "~/utils/api";
+import {getAxiosConfigWithJwt} from "~/utils/api";
 
 export default {
   name: "upload",
   data() {
     return {
       files: [],
-      file2:[],
-      requestData:[],
-      responseData:[]
+      file2: [],
+      requestData: [],
+      responseData: []
     }
   },
-  methods:{
+  methods: {
     async postBulk() {
       var requestBody = []
       for (const x of this.files) {
@@ -43,20 +43,15 @@ export default {
         })
       }
       this.requestData = requestBody
-        try {
-          const res = await this.$axios.post('/post/bulk',requestBody,
-            {
-              headers: {
-                Authorization: 'Bearer ' + getCookie("jwt")
-              }
-            });
-          this.responseData = res
+      try {
+        const res = await this.$axios.post('/post/bulk', requestBody, getAxiosConfigWithJwt());
+        this.responseData = res
 
-        } catch (e) {
-          console.log(e)
-        }
+      } catch (e) {
+        console.log(e)
+      }
     },
-    toBase64(file){
+    toBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);

@@ -1,25 +1,25 @@
 <template>
   <div>
-    <no-client>
+    <client-only>
       <LightGallery :images="postsNew" :index="index" @close="index = null"></LightGallery>
       <Stack :monitor-images-loaded="true" :column-min-width="320" :gutter-width="4" :gutter-height="4">
         <StackItem v-for="(post,i) in posts" :key="i">
           <post-card :post="post" @click.native="index=i"></post-card>
-          <div class="w-100 p-0" style="background-color: red"><small class="float-left">{{post.username}}</small> <small class="float-right">{{post.screenshotDate}}</small> </div>
+          <div class="w-100 p-0" style="background-color: red"><small class="float-left">{{ post.username }}</small>
+            <small class="float-right">{{ post.screenshotDate }}</small></div>
         </StackItem>
       </Stack>
-    </no-client>
+    </client-only>
   </div>
 </template>
 
 <script>
 
-import {getCookie} from "@/utils/api";
+import {getAxiosConfigWithJwt} from "@/utils/api";
 
 export default {
   name: "index",
-  methods: {
-  },
+  methods: {},
   data() {
     return {
       posts: [],
@@ -30,12 +30,7 @@ export default {
   async mounted() {
     if (process.browser) {
       try {
-        const res = await this.$axios.$get('/post/all',
-          {
-            headers: {
-              Authorization: 'Bearer ' + getCookie("jwt")
-            }
-          });
+        const res = await this.$axios.$get('/post/all', getAxiosConfigWithJwt());
         this.posts = res
         this.postsNew = res.map(x => ({url: x.fileUrl, title: "no-title", h: "1200"}))
       } catch (e) {
@@ -50,7 +45,7 @@ export default {
 
 </style>
 <style>
-.light-gallery__text{
+.light-gallery__text {
   display: none !important;
   padding: 0px !important;
   width: 30% !important;
