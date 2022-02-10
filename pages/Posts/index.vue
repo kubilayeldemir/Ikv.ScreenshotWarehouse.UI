@@ -1,6 +1,6 @@
 <template>
   <div>
-    <no-ssr>
+    <no-client>
       <LightGallery :images="postsNew" :index="index" @close="index = null"></LightGallery>
       <Stack :monitor-images-loaded="true" :column-min-width="320" :gutter-width="4" :gutter-height="4">
         <StackItem v-for="(post,i) in posts" :key="i">
@@ -8,7 +8,7 @@
           <div class="w-100 p-0" style="background-color: red"><small class="float-left">{{post.username}}</small> <small class="float-right">{{post.screenshotDate}}</small> </div>
         </StackItem>
       </Stack>
-    </no-ssr>
+    </no-client>
   </div>
 </template>
 

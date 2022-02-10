@@ -1,8 +1,8 @@
 <template>
   <div class="bg-dark text-white" style="height: 100%; min-height: 100vh; min-width: 100vw">
-    <no-ssr>
+    <client-only>
       <p v-if="this.user != null">Hoşgeldin {{ this.user.username }}</p>
-    </no-ssr>
+    </client-only>
     <Nuxt/>
   </div>
 </template>
