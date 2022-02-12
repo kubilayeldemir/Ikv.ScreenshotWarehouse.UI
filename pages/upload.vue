@@ -5,22 +5,31 @@
       <p>PNG veya JPG formatındaki dosyalar desteklenmektedir</p>
       <p>İkv ekran görüntülerin isimlerinden ne zaman çekildiği tarihi elde edilmektedir.
         Bu sayede ekran görüntülerini tarihlerine göre arayabileceksiniz.</p>
+      <div v-if="!isUploading">
+        <client-only>
+          <b-form-file
+            accept=".jpg, .png, .jpeg"
+            v-model="files"
+            multiple
+            placeholder="Dosyaları seçin veya buraya sürükleyin"
+            drop-placeholder="Dosyayı tam buraya bırak..."
+          ></b-form-file>
+        </client-only>
 
-      <client-only>
-        <b-form-file
-          accept=".jpg, .png, .jpeg"
-          v-model="files"
-          multiple
-          placeholder="Dosyaları seçin veya buraya sürükleyin"
-          drop-placeholder="Dosyayı tam buraya bırak..."
-        ></b-form-file>
-      </client-only>
+        <div class="mt-3">Seçilen dosya sayısı: {{ files.length }}</div>
 
-      <div class="mt-3">Seçilen dosya sayısı: {{ files.length }}</div>
+        <b-button class="mt-1" :disabled="saveButtonCondition" variant="success"
+                  @click="this.postBulkSavePartitioned">Dosyaları Yükle
+        </b-button>
+      </div>
 
-      <b-button class="mt-1" :disabled="saveButtonCondition" variant="success"
-                @click="this.postBulkSavePartitioned">Dosyaları Yükle
-      </b-button>
+      <div v-else>
+        <p v-if="!isUploaded">Dosyalar yükleniyor...{{ progressBarValue.toFixed(0) }}/100</p>
+        <p v-else>Dosyalar yüklendi!</p>
+        <b-progress class="mt-2" :value="progressBarValue" variant="success" striped
+                    :animated="!isUploaded"></b-progress>
+        <b-textarea v-if="isUploaded" v-model="responseData" size="sm"></b-textarea>
+      </div>
     </div>
   </div>
 </template>
@@ -36,12 +45,17 @@ export default {
       file2: [],
       requestData: [],
       responseData: [],
-      buttonDisabled: false
+      buttonDisabled: false,
+      isUploading: false,
+      progressBarEnable: false,
+      progressBarAnimate: true,
+      progressBarValue: 0,
+      isUploaded: false
     }
   },
   computed: {
     saveButtonCondition: function () {
-      if (!this.buttonDisabled){
+      if (!this.buttonDisabled) {
         return this.files.length < 1
       }
       return true
@@ -49,19 +63,24 @@ export default {
   },
   methods: {
     async postBulkSavePartitioned() {
+      this.isUploading = true
       const partitionCount = 5
       this.buttonDisabled = true
-      await new Promise(r => setTimeout(r, 2000));
-
       if (this.files.length < partitionCount) {
         await this.postBulkSave(this.files);
+        // await new Promise(r => setTimeout(r, 2000));
+        this.progressBarValue = 100
       } else {
         for (let i = 0; i < this.files.length; i += partitionCount) {
           let partitonedPosts = this.files.slice(i, i + partitionCount)
           await this.postBulkSave(partitonedPosts);
+          // await new Promise(r => setTimeout(r, 2000));
+          this.progressBarValue = (i + partitionCount) / this.files.length * 100
         }
       }
       this.files = []
+      this.progressBarAnimate = false
+      this.isUploaded = true
       this.buttonDisabled = false
     },
     async postBulkSave(files) {
@@ -76,13 +95,14 @@ export default {
       this.requestData = requestBody
       try {
         const res = await this.$axios.post('/post/bulk', requestBody, getAxiosConfigWithJwt());
-        this.responseData = res
+        console.log(res)
+        this.responseData = this.responseData.concat(res.data)
 
       } catch (e) {
         console.log(e)
       }
     },
-    toBase64(file) {
+    async toBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
