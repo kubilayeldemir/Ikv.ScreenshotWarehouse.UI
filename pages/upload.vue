@@ -9,14 +9,14 @@
         <client-only>
           <b-form-file
             accept=".jpg, .png, .jpeg"
-            v-model="files"
+            v-model="selectedFiles"
             multiple
             placeholder="Dosyaları seçin veya buraya sürükleyin"
             drop-placeholder="Dosyayı tam buraya bırak..."
           ></b-form-file>
         </client-only>
 
-        <div class="mt-3">Seçilen dosya sayısı: {{ files.length }}</div>
+        <div class="mt-3">Seçilen dosya sayısı: {{ selectedFiles.length }}</div>
 
         <b-button class="mt-1" :disabled="saveButtonCondition" variant="success"
                   @click="this.postBulkSavePartitioned">Dosyaları Yükle
@@ -28,7 +28,21 @@
         <p v-else>Dosyalar yüklendi!</p>
         <b-progress class="mt-2" :value="progressBarValue" variant="success" striped
                     :animated="!isUploaded"></b-progress>
-        <b-textarea v-if="isUploaded" v-model="responseData" size="sm"></b-textarea>
+        <b-textarea v-if="isUploaded" v-model="responseData.toString()" size="sm"></b-textarea>
+      </div>
+      <div v-if="isUploaded">
+        <b-icon icon="exclamation-circle-fill" variant="success"></b-icon>
+        Başarıyla yüklenen dosya sayısı: {{ successfulPostSaveCount }}
+        <br>
+        <b-icon icon="exclamation-circle-fill" variant="danger"></b-icon>
+        Dosya boyutunun büyük olması sebebiyle kaydedilmeyen dosya sayısı: {{ fileSizeNotValidPosts.length }}
+        <b-icon title="Her dosya en fazla 1 MB boyutunda olabilir" icon="question-circle-fill"
+                variant="warning"></b-icon>
+        <br>
+        <b-icon icon="exclamation-circle-fill" variant="danger"></b-icon>
+        Yüklemesi başarısız olan dosya sayısı: {{ unsuccessfulPostSaveCount }}
+        <b-icon :title="returnUnSuccessfullSaveErrors()" icon="question-circle-fill"
+                variant="warning"></b-icon>
       </div>
     </div>
   </div>
@@ -36,14 +50,15 @@
 
 <script>
 import {getAxiosConfigWithJwt} from "~/utils/api";
+import {BIcon, BIconExclamationCircleFill, BIconQuestionCircleFill} from 'bootstrap-vue'
 
 export default {
   name: "upload",
   data() {
     return {
-      files: [],
-      file2: [],
-      requestData: [],
+      selectedFiles: [],
+      fileSizeNotValidPosts: [],
+      filesToUpload: [],
       responseData: [],
       buttonDisabled: false,
       isUploading: false,
@@ -56,29 +71,43 @@ export default {
   computed: {
     saveButtonCondition: function () {
       if (!this.buttonDisabled) {
-        return this.files.length < 1
+        return this.selectedFiles.length < 1
       }
       return true
+    },
+    successfulPostSaveCount: function () {
+      if (!this.isUploaded) {
+        return 0
+      }
+      return this.responseData.filter(x => x.isOk === true).length
+    },
+    unsuccessfulPostSaveCount: function () {
+      if (!this.isUploaded) {
+        return 0
+      }
+      return this.responseData.filter(x => x.isOk === false).length
     }
   },
   methods: {
     async postBulkSavePartitioned() {
+      this.validatePosts()
       this.isUploading = true
       const partitionCount = 5
       this.buttonDisabled = true
-      if (this.files.length < partitionCount) {
-        await this.postBulkSave(this.files);
+      if (this.filesToUpload.length < partitionCount) {
+        await this.postBulkSave(this.filesToUpload);
         // await new Promise(r => setTimeout(r, 2000));
         this.progressBarValue = 100
       } else {
-        for (let i = 0; i < this.files.length; i += partitionCount) {
-          let partitonedPosts = this.files.slice(i, i + partitionCount)
+        for (let i = 0; i < this.filesToUpload.length; i += partitionCount) {
+          let partitonedPosts = this.filesToUpload.slice(i, i + partitionCount)
           await this.postBulkSave(partitonedPosts);
           // await new Promise(r => setTimeout(r, 2000));
-          this.progressBarValue = (i + partitionCount) / this.files.length * 100
+          this.progressBarValue = (i + partitionCount) / this.selectedFiles.length * 100
         }
       }
-      this.files = []
+      this.selectedFiles = []
+      this.filesToUpload = []
       this.progressBarAnimate = false
       this.isUploaded = true
       this.buttonDisabled = false
@@ -92,12 +121,9 @@ export default {
           fileBase64: base64Value
         })
       }
-      this.requestData = requestBody
       try {
         const res = await this.$axios.post('/post/bulk', requestBody, getAxiosConfigWithJwt());
-        console.log(res)
         this.responseData = this.responseData.concat(res.data)
-
       } catch (e) {
         console.log(e)
       }
@@ -110,10 +136,25 @@ export default {
         reader.onerror = error => reject(error);
       });
     },
-    async printBase64() {
-      var x = await this.toBase64(this.file2);
-      console.log(x)
+    validatePosts() {
+      let validatedPosts = []
+      validatedPosts = validatedPosts.concat(this.filterPostsByFileSize(this.selectedFiles))
+      this.filesToUpload = validatedPosts;
+    },
+    filterPostsByFileSize(files) {
+      const maxFileSize = 1000 * 1000
+      this.fileSizeNotValidPosts = files.filter(x => x.size >= maxFileSize)
+      return files.filter(x => x.size < maxFileSize);
+    },
+    returnUnSuccessfullSaveErrors() {
+      let notOkPosts = this.responseData.filter(x => x.isOk === false)
+      return notOkPosts.map(x => x.error).join('-')
     }
+  },
+  components: {
+    BIcon,
+    BIconExclamationCircleFill,
+    BIconQuestionCircleFill
   }
 }
 </script>
