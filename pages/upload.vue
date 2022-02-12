@@ -1,21 +1,27 @@
 <template>
-  <div>
-    <client-only>
-      <b-form-file
-        accept=".jpg, .png"
-        v-model="files"
-        multiple
-        placeholder="Choose a file or drop it here..."
-        drop-placeholder="Drop file here..."
-      ></b-form-file>
-      <div class="mt-3">Selected file: {{ files[0] ? files[0].name : '' }}</div>
-    </client-only>
+  <div class="container">
+    <div class="col-12 col-lg-8">
+      <p>Bu sayfa ile yüklemek istediğin görüntüleri çoklu olarak yükleyebilirsin</p>
+      <p>PNG veya JPG formatındaki dosyalar desteklenmektedir</p>
+      <p>İkv ekran görüntülerin isimlerinden ne zaman çekildiği tarihi elde edilmektedir.
+        Bu sayede ekran görüntülerini tarihlerine göre arayabileceksiniz.</p>
 
-    <b-form-file accept=".jpg, .png" v-model="file2" class="mt-3"></b-form-file>
-    <div class="mt-3">Selected file: {{ file2 ? file2.name : '' }}</div>
-    <button @click="this.printBase64">Single Save</button>
-    <button @click="this.postBulk">Bulk Save</button>
+      <client-only>
+        <b-form-file
+          accept=".jpg, .png, .jpeg"
+          v-model="files"
+          multiple
+          placeholder="Dosyaları seçin veya buraya sürükleyin"
+          drop-placeholder="Dosyayı tam buraya bırak..."
+        ></b-form-file>
+      </client-only>
 
+      <div class="mt-3">Seçilen dosya sayısı: {{ files.length }}</div>
+
+      <b-button class="mt-1" :disabled="saveButtonCondition" variant="success"
+                @click="this.postBulkSavePartitioned">Dosyaları Yükle
+      </b-button>
+    </div>
   </div>
 </template>
 
@@ -29,13 +35,38 @@ export default {
       files: [],
       file2: [],
       requestData: [],
-      responseData: []
+      responseData: [],
+      buttonDisabled: false
+    }
+  },
+  computed: {
+    saveButtonCondition: function () {
+      if (!this.buttonDisabled){
+        return this.files.length < 1
+      }
+      return true
     }
   },
   methods: {
-    async postBulk() {
+    async postBulkSavePartitioned() {
+      const partitionCount = 5
+      this.buttonDisabled = true
+      await new Promise(r => setTimeout(r, 2000));
+
+      if (this.files.length < partitionCount) {
+        await this.postBulkSave(this.files);
+      } else {
+        for (let i = 0; i < this.files.length; i += partitionCount) {
+          let partitonedPosts = this.files.slice(i, i + partitionCount)
+          await this.postBulkSave(partitonedPosts);
+        }
+      }
+      this.files = []
+      this.buttonDisabled = false
+    },
+    async postBulkSave(files) {
       var requestBody = []
-      for (const x of this.files) {
+      for (const x of files) {
         var base64Value = await this.toBase64(x)
         requestBody.push({
           fileName: x.name,
