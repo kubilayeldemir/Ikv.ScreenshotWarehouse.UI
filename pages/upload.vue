@@ -122,7 +122,7 @@ export default {
       this.buttonDisabled = true
       if (this.filesToUpload.length < partitionCount) {
         await this.postBulkSave(this.filesToUpload);
-        await new Promise(r => setTimeout(r, 2000));
+        // await new Promise(r => setTimeout(r, 2000));
         this.progressBarValue = 100
       } else {
         for (let i = 0; i < this.filesToUpload.length; i += partitionCount) {
