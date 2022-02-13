@@ -24,14 +24,13 @@
       </div>
 
       <div v-else>
-        <p v-if="!isUploaded">Dosyalar yükleniyor...{{ progressBarValue.toFixed(0) }}/100</p>
+        <p v-if="!isUploaded">Dosyalar yükleniyor...&nbsp;&nbsp;&nbsp;{{ progressBarValue.toFixed(0) }}/100%</p>
         <p v-else>Dosyalar yüklendi!</p>
         <b-progress class="mt-2" :value="progressBarValue" variant="success" striped
                     :animated="!isUploaded"></b-progress>
-        <b-textarea v-if="isUploaded" v-model="responseData.toString()" size="sm"></b-textarea>
       </div>
       <div v-if="isUploaded">
-        <b-icon icon="exclamation-circle-fill" variant="success"></b-icon>
+        <b-icon icon="check-circle-fill" variant="success"></b-icon>
         Başarıyla yüklenen dosya sayısı: {{ successfulPostSaveCount }}
         <br>
         <b-icon icon="exclamation-circle-fill" variant="danger"></b-icon>
@@ -43,6 +42,33 @@
         Yüklemesi başarısız olan dosya sayısı: {{ unsuccessfulPostSaveCount }}
         <b-icon :title="returnUnSuccessfullSaveErrors()" icon="question-circle-fill"
                 variant="warning"></b-icon>
+
+        <table class="table mt-3">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Durumu</th>
+            <th scope="col">Id</th>
+            <th scope="col">Dosya adresi</th>
+            <th scope="col">Açıklama</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(res,index) in responseData" :key="index">
+            <th scope="row">{{ index + 1 }}</th>
+            <td>
+              <b-icon v-if="res.isOk" icon="check-circle-fill" variant="success"></b-icon>
+              <b-icon v-else icon="exclamation-circle-fill" variant="danger"></b-icon>
+            </td>
+            <td>{{ res.id ? res.id : "-" }}</td>
+            <td>
+              <a v-if="res.fileUrl" :href="res.fileUrl" target="_blank">Link</a>
+              <p v-else>-</p>
+            </td>
+            <td>{{ res.error ? res.error : "Yükleme Başarılı" }}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -50,7 +76,7 @@
 
 <script>
 import {getAxiosConfigWithJwt} from "~/utils/api";
-import {BIcon, BIconExclamationCircleFill, BIconQuestionCircleFill} from 'bootstrap-vue'
+import {BIcon, BIconExclamationCircleFill, BIconQuestionCircleFill, BIconCheckCircleFill} from 'bootstrap-vue'
 
 export default {
   name: "upload",
@@ -96,7 +122,7 @@ export default {
       this.buttonDisabled = true
       if (this.filesToUpload.length < partitionCount) {
         await this.postBulkSave(this.filesToUpload);
-        // await new Promise(r => setTimeout(r, 2000));
+        await new Promise(r => setTimeout(r, 2000));
         this.progressBarValue = 100
       } else {
         for (let i = 0; i < this.filesToUpload.length; i += partitionCount) {
@@ -154,7 +180,8 @@ export default {
   components: {
     BIcon,
     BIconExclamationCircleFill,
-    BIconQuestionCircleFill
+    BIconQuestionCircleFill,
+    BIconCheckCircleFill
   }
 }
 </script>
