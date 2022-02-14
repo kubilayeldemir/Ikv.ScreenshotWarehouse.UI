@@ -29,7 +29,7 @@
         <b-progress class="mt-2" :value="progressBarValue" variant="success" striped
                     :animated="!isUploaded"></b-progress>
       </div>
-      <div v-if="isUploaded">
+      <div v-if="isUploaded" class="mt-3">
         <b-icon icon="check-circle-fill" variant="success"></b-icon>
         Başarıyla yüklenen dosya sayısı: {{ successfulPostSaveCount }}
         <br>
@@ -43,7 +43,7 @@
         <b-icon :title="returnUnSuccessfullSaveErrors()" icon="question-circle-fill"
                 variant="warning"></b-icon>
 
-        <table class="table mt-3">
+        <table class="table mt-3 text-white">
           <thead>
           <tr>
             <th scope="col">#</th>
@@ -54,7 +54,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(res,index) in responseData" :key="index">
+          <tr v-for="(res,index) in responseData" :key="index" style="white-space: nowrap">
             <th scope="row">{{ index + 1 }}</th>
             <td>
               <b-icon v-if="res.isOk" icon="check-circle-fill" variant="success"></b-icon>
@@ -71,6 +71,9 @@
         </table>
       </div>
     </div>
+    <b-button class="mt-1 float-right " variant="danger"
+              @click="this.resetData">Sayfayı Temizle
+    </b-button>
   </div>
 </template>
 
@@ -175,6 +178,21 @@ export default {
     returnUnSuccessfullSaveErrors() {
       let notOkPosts = this.responseData.filter(x => x.isOk === false)
       return notOkPosts.map(x => x.error).join('-')
+    },
+    resetData() {
+      Object.assign(this.$data,
+        {
+          selectedFiles: [],
+          fileSizeNotValidPosts: [],
+          filesToUpload: [],
+          responseData: [],
+          buttonDisabled: false,
+          isUploading: false,
+          progressBarEnable: false,
+          progressBarAnimate: true,
+          progressBarValue: 0,
+          isUploaded: false
+        });
     }
   },
   components: {

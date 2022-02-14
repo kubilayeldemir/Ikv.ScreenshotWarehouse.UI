@@ -1,9 +1,7 @@
 <template>
-  <div class="bg-dark text-white" style="height: 100%; min-height: 100vh; min-width: 100vw">
-    <client-only>
-      <p v-if="this.user != null">Hoşgeldin {{ this.user.username }}</p>
-    </client-only>
-    <Nuxt/>
+  <div class="dark-mode ">
+    <header-component></header-component>
+    <Nuxt class="d-flex flex-column align-items-center"/>
   </div>
 </template>
 
@@ -32,7 +30,13 @@ export default {
 </script>
 
 <style scoped>
-
+.dark-mode {
+  background-color: #202124;
+  height: auto;
+  overflow: hidden;
+  min-height: 100vh;
+  color: white;
+}
 </style>
 
 
