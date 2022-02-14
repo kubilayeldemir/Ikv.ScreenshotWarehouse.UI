@@ -15,6 +15,10 @@ export function getCookie(name) {
   if (match) return match[2];
 }
 
+export function eraseCookie(name){
+  document.cookie = name+'=; Max-Age=-99999999;';
+}
+
 
 export function getAxiosConfigWithJwt() {
   var config = {

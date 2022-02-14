@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-3">
     <div class="col-12 col-lg-8">
       <p>Bu sayfa ile yüklemek istediğin görüntüleri çoklu olarak yükleyebilirsin</p>
       <p>PNG veya JPG formatındaki dosyalar desteklenmektedir</p>

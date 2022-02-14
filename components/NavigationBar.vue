@@ -1,5 +1,5 @@
 <template>
-  <div style="border-style: groove hidden ridge; border-color: grey">
+  <div style="border-style: groove hidden ridge; border-color: grey;">
     <b-navbar toggleable="lg" type="dark" variant="dark">
       <!--      background-color: #4a4d4f-->
       <b-navbar-brand href="#">
@@ -10,9 +10,15 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="/posts">Resimler</b-nav-item>
-          <b-nav-item href="/upload">Resim Yükle</b-nav-item>
-          <b-nav-item href="#" disabled>Resimlerim</b-nav-item>
+          <b-nav-item>
+            <nuxt-link to="/posts">Resimler</nuxt-link>
+          </b-nav-item>
+          <b-nav-item>
+            <nuxt-link to="/upload">Resim Yükle</nuxt-link>
+          </b-nav-item>
+          <b-nav-item>
+            <nuxt-link to="/posts">Resimler</nuxt-link>
+          </b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -20,13 +26,12 @@
           <b-nav-form>
             asd
           </b-nav-form>
-
-          <b-nav-item-dropdown text="Lang" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
-          </b-nav-item-dropdown>
+          <!--          <b-nav-item-dropdown text="Lang" right>-->
+          <!--            <b-dropdown-item href="#">EN</b-dropdown-item>-->
+          <!--            <b-dropdown-item href="#">ES</b-dropdown-item>-->
+          <!--            <b-dropdown-item href="#">RU</b-dropdown-item>-->
+          <!--            <b-dropdown-item href="#">FA</b-dropdown-item>-->
+          <!--          </b-nav-item-dropdown>-->
           <client-only>
             <b-nav-item-dropdown v-if="user" right>
               <!-- Using 'button-content' slot -->
@@ -34,8 +39,12 @@
                 <em>{{ user.username }}</em>
               </template>
               <b-dropdown-item href="#">Profilim</b-dropdown-item>
-              <b-dropdown-item href="#">Oturumu Kapat</b-dropdown-item>
+              <b-dropdown-item @click="logoutUser" href="#">Oturumu Kapat</b-dropdown-item>
             </b-nav-item-dropdown>
+            <b-navbar-nav v-else right>
+              <b-nav-item @click="routeTologin">Giriş yap</b-nav-item>
+              <b-nav-item @click="routeToRegister">Üye ol</b-nav-item>
+            </b-navbar-nav>
           </client-only>
         </b-navbar-nav>
       </b-collapse>
@@ -44,13 +53,21 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapState, mapMutations} from 'vuex';
 
 export default {
   name: "NavigationBar",
   computed: {
-    ...mapState([
-      "user"])
+    ...mapState(["user"])
+  },
+  methods: {
+    ...mapMutations(['logoutUser']),
+    routeTologin() {
+      this.$router.push("/login")
+    },
+    routeToRegister() {
+      this.$router.push("/register")
+    }
   }
 }
 </script>
