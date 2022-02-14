@@ -1,0 +1,35 @@
+<template>
+  <div class="container">
+    <img ref="scrollToMe" :src="post.fileUrl">
+    <p>Username: {{ post.username }}</p>
+    <p>title: {{ post.title }}</p>
+    <p>screenshotDate: {{ post.screenshotDate }}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      post: {}
+    }
+  },
+  name: "_id",
+  async fetch() {
+    this.post = await this.$axios.$get(`/post/${this.$route.params.id}`);
+  },
+  mounted() {
+    if (process.browser) {
+      const el = this.$refs.scrollToMe;
+      if (el) {
+        // Use el.scrollIntoView() to instantly scroll to the element
+        el.scrollIntoView({behavior: 'smooth'});
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
