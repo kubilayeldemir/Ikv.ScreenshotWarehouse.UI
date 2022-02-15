@@ -1,8 +1,7 @@
 <template>
   <div style="border-style: groove hidden ridge; border-color: grey;">
     <b-navbar toggleable="lg" type="dark" variant="dark">
-      <!--      background-color: #4a4d4f-->
-      <b-navbar-brand href="#">
+      <b-navbar-brand>
         <nuxt-link to="/">Anasayfa</nuxt-link>
       </b-navbar-brand>
 
@@ -10,15 +9,15 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item>
-            <nuxt-link to="/posts">Resimler</nuxt-link>
+          <b-nav-item @click="routeToPosts">
+            Resimler
           </b-nav-item>
-          <b-nav-item>
-            <nuxt-link to="/upload">Resim Yükle</nuxt-link>
+          <b-nav-item @click="routeToUpload">
+            Resim Yükle
           </b-nav-item>
-          <b-nav-item>
-            <nuxt-link to="/posts">Resimler</nuxt-link>
-          </b-nav-item>
+          <!--          <b-nav-item>-->
+          <!--            <nuxt-link to="/posts">Resimlerrr</nuxt-link>-->
+          <!--          </b-nav-item>-->
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -38,8 +37,8 @@
               <template #button-content>
                 <em>{{ user.username }}</em>
               </template>
-              <b-dropdown-item href="#">Profilim</b-dropdown-item>
-              <b-dropdown-item @click="logoutUser" href="#">Oturumu Kapat</b-dropdown-item>
+              <b-dropdown-item>Profilim</b-dropdown-item>
+              <b-dropdown-item @click="logoutUser">Oturumu Kapat</b-dropdown-item>
             </b-nav-item-dropdown>
             <b-navbar-nav v-else right>
               <b-nav-item @click="routeTologin">Giriş yap</b-nav-item>
@@ -67,6 +66,12 @@ export default {
     },
     routeToRegister() {
       this.$router.push("/register")
+    },
+    routeToPosts() {
+      this.$router.push("/posts")
+    },
+    routeToUpload() {
+      this.$router.push("/upload")
     }
   }
 }
