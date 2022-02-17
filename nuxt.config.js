@@ -42,7 +42,11 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/gtm'
   ],
+  gtm: {
+    id: 'GTM-TFTV9VL'
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
