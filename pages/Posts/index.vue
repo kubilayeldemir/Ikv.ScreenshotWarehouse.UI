@@ -1,54 +1,48 @@
 <template>
-  <div>
-    <client-only>
-      <LightGallery :images="postsNew" :index="index" @close="index = null"></LightGallery>
-      <Stack :monitor-images-loaded="true" :column-min-width="320" :gutter-width="4" :gutter-height="4">
-        <StackItem v-for="(post,i) in posts" :key="i">
-          <post-card :post="post" @click.native="index=i"></post-card>
-          <div class="w-100 p-0" style="background-color: red"><small class="float-left">{{ post.username }}</small>
-            <small class="float-right">{{ post.screenshotDate }}</small></div>
-        </StackItem>
-      </Stack>
-    </client-only>
+  <div v-lazy-container="{ selector: 'img' }">
+    <div v-for="(post,i) in posts" :key="post.id">
+      {{ i }}
+      <img :data-src="post.fileUrl">
+    </div>
+    <b-button v-if="currentPage < pageCount" @click="loadNextPage" variant="success"> ></b-button>
   </div>
 </template>
 
 <script>
-
-import {getAxiosConfigWithJwt} from "@/utils/api";
-
 export default {
   name: "index",
-  methods: {},
   data() {
     return {
-      posts: [],
-      postsNew: [],
-      index: null
+      posts: {},
+      pageCount: 0,
+      currentPage: 0,
+      pageSize: 0,
+      rowCount: 0
     }
   },
-  async mounted() {
-    if (process.browser) {
-      try {
-        const res = await this.$axios.$get('/post/all', getAxiosConfigWithJwt());
-        this.posts = res
-        this.postsNew = res.map(x => ({url: x.fileUrl, title: "no-title", h: "1200"}))
-      } catch (e) {
-        console.log(e)
-      }
+  async fetch() {
+    var res = await this.$axios.$get("/post/paged");
+    this.setResPagingDataToData(res)
+    this.posts = res.data
+  },
+  methods: {
+    async loadNextPage() {
+      var res = await this.$axios.$get(`/post/paged/?CurrentPage=${this.currentPage + 1}`);
+      this.setResPagingDataToData(res)
+      this.posts = this.posts.concat(res.data)
+    },
+    setResPagingDataToData(res) {
+      this.pageCount = res.pageCount
+      this.currentPage = res.currentPage
+      this.pageSize = res.pageSize
+      this.rowCount = res.rowCount
     }
   }
 }
 </script>
 
 <style scoped>
-
-</style>
-<style>
-.light-gallery__text {
-  display: none !important;
-  padding: 0px !important;
-  width: 30% !important;
-  font-size: 1em !important;
+img {
+  max-width: 60vw;
 }
 </style>

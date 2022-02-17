@@ -27,5 +27,4 @@ export function getAxiosConfigWithJwt() {
     }
   }
   return config
-
 }

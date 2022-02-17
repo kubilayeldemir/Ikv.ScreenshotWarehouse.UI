@@ -27,7 +27,9 @@ export default {
     {src: '~/plugins/vue-stack-grid.js', mode: 'client'},
     {src: '~/plugins/lightGallery.client.js', mode: 'client' },
     '@/plugins/axios',
-    { src: '~/plugins/vuex-persist', mode: 'client' }
+    { src: '~/plugins/vuex-persist', mode: 'client' },
+    { src: '~/plugins/vue-lazy-load.js', mode: 'client' }
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
