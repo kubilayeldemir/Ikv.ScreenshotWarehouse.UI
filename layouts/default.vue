@@ -12,7 +12,7 @@ export default {
   name: "default",
   head() {
     return {
-      title: "İstanbul Kıyamet Vakti SS Deposu",
+      title: "İstanbul Kıyamet Vakti SS Deposu - İKV",
       meta: [
         {
           hid: "İkv SS Deposu",

@@ -4,15 +4,18 @@ export default {
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Ikv.ScreenshotWarehouse.UI',
+    title: 'İstanbul Kıyamet Vakti SS Deposu',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'tr'
     },
     meta: [
-      {charset: 'utf-8'},
-      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: ''},
-      {name: 'format-detection', content: 'telephone=no'}
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        hid: "İkv SS Deposu",
+        name: "İkv SS Deposu",
+        content: "İstanbul Kıyamet Vakti oyununun ekran görüntülerini bulabileceğiniz ve yükleyebileceğiniz bir paylaşım sitesi."
+      }
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
