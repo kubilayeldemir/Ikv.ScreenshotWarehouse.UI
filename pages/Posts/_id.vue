@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <img ref="scrollToMe" :src="post.fileUrl">
+  <div class="container" ref="scrollToMe">
+    <ImageComponent :post="this.post"></ImageComponent>
     <p>Username: {{ post.username }}</p>
     <p>title: {{ post.title }}</p>
     <p>screenshotDate: {{ post.screenshotDate }}</p>
@@ -14,7 +14,7 @@ export default {
       post: {}
     }
   },
-  name: "_id",
+  name: "PostId",
   async fetch() {
     this.post = await this.$axios.$get(`/post/${this.$route.params.id}`);
   },

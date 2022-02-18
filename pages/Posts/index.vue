@@ -1,8 +1,6 @@
 <template>
-  <div v-lazy-container="{ selector: 'img' }">
-    <div v-for="(post,i) in posts" :key="post.id">
-      <img @click="e => e.target.classList.toggle('zoomed')" :data-src="post.fileUrl">
-    </div>
+  <div>
+    <ImageComponent :lazy="true" v-for="(post,i) in posts" :key="post.id" :post="post"></ImageComponent>
     <b-button v-if="currentPage < pageCount" @click="loadNextPage" variant="success"> ></b-button>
   </div>
 </template>
@@ -22,10 +20,9 @@ export default {
   async fetch() {
     var pageNumber = this.$route.query.page
     let query
-    if (pageNumber){
+    if (pageNumber) {
       query = `/post/paged?CurrentPage=${pageNumber}`
-    }
-    else{
+    } else {
       query = `/post/paged`
     }
     var res = await this.$axios.$get(query);
@@ -58,13 +55,4 @@ export default {
 </script>
 
 <style scoped>
-img {
-  max-width: 60vw;
-  max-height: 75vh;
-
-}
-.zoomed{
-  max-width: 90vw !important;
-  max-height: 95vh !important;
-}
 </style>
