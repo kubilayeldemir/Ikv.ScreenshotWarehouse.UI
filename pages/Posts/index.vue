@@ -1,8 +1,7 @@
 <template>
   <div v-lazy-container="{ selector: 'img' }">
     <div v-for="(post,i) in posts" :key="post.id">
-      {{ i }}
-      <img :data-src="post.fileUrl">
+      <img @click="e => e.target.classList.toggle('zoomed')" :data-src="post.fileUrl">
     </div>
     <b-button v-if="currentPage < pageCount" @click="loadNextPage" variant="success"> ></b-button>
   </div>
@@ -44,5 +43,9 @@ export default {
 <style scoped>
 img {
   max-width: 60vw;
+}
+.zoomed{
+  max-width: 90vw !important;
+  max-height: 95vw !important;
 }
 </style>
