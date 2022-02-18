@@ -20,21 +20,38 @@ export default {
     }
   },
   async fetch() {
-    var res = await this.$axios.$get("/post/paged");
+    var pageNumber = this.$route.query.page
+    let query
+    if (pageNumber){
+      query = `/post/paged?CurrentPage=${pageNumber}`
+    }
+    else{
+      query = `/post/paged`
+    }
+    var res = await this.$axios.$get(query);
     this.setResPagingDataToData(res)
     this.posts = res.data
+    console.log(query)
   },
   methods: {
     async loadNextPage() {
       var res = await this.$axios.$get(`/post/paged/?CurrentPage=${this.currentPage + 1}`);
       this.setResPagingDataToData(res)
       this.posts = this.posts.concat(res.data)
+      this.addHashToLocation(this.currentPage)
     },
     setResPagingDataToData(res) {
       this.pageCount = res.pageCount
       this.currentPage = res.currentPage
       this.pageSize = res.pageSize
       this.rowCount = res.rowCount
+    },
+    addHashToLocation(pageNumber) {
+      history.pushState(
+        {},
+        null,
+        this.$route.path + '?page=' + pageNumber
+      )
     }
   }
 }
@@ -43,9 +60,11 @@ export default {
 <style scoped>
 img {
   max-width: 60vw;
+  max-height: 75vh;
+
 }
 .zoomed{
   max-width: 90vw !important;
-  max-height: 95vw !important;
+  max-height: 95vh !important;
 }
 </style>
