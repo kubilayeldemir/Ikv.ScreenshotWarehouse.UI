@@ -1,69 +1,72 @@
 <template>
   <b-container>
-    <div class="row col-10 col-lg-6 ml-3 pt-3">
-      İkv Ss deposuna üye olmak için lütfen aşağıdaki alanları doldur.
-      <hr/>
-      <b-form @submit="login" v-if="show" class="mt-3">
+    <client-only>
+      <div v-if="!user" class="row col-10 col-lg-6 ml-3 pt-3">
+        İkv Ss deposuna üye olmak için lütfen aşağıdaki alanları doldur.
+        <hr/>
+        <b-form @submit="login" v-if="show" class="mt-3">
 
-        <b-form-group
-          id="input-group-1"
-          label="Kullanıcı Adın:"
-          label-for="input-1"
-          description=""
-        >
-          <b-form-input
-            id="input-1"
-            v-model="form.username"
-            type="text"
-            placeholder="Kullanıcı adı"
-            required
-          ></b-form-input>
-        </b-form-group>
+          <b-form-group
+            id="input-group-1"
+            label="Kullanıcı Adın:"
+            label-for="input-1"
+            description=""
+          >
+            <b-form-input
+              id="input-1"
+              v-model="form.username"
+              type="text"
+              placeholder="Kullanıcı adı"
+              required
+            ></b-form-input>
+          </b-form-group>
 
-        <b-form-group id="input-group-2" label="Şifren:" label-for="input-2">
-          <b-form-input
-            type="password"
-            id="input-2"
-            v-model="form.password"
-            placeholder="sifre"
-            required
-          ></b-form-input>
-        </b-form-group>
+          <b-form-group id="input-group-2" label="Şifren:" label-for="input-2">
+            <b-form-input
+              type="password"
+              id="input-2"
+              v-model="form.password"
+              placeholder="sifre"
+              required
+            ></b-form-input>
+          </b-form-group>
 
-        <b-button type="submit" variant="primary">Giriş yap</b-button>
+          <b-button type="submit" variant="primary">Giriş yap</b-button>
 
-      </b-form>
-      <!--      <b-card class="mt-3" header="Kontrol tahtasdı">-->
-      <!--        <pre class="m-0">{{ form }}</pre>-->
-      <!--      </b-card>-->
-    </div>
-    <div class="row col-10 col-lg-6 ml-3 pt-3">
-      <nuxt-link to="/register">
-        <b-button type="reset" variant="danger">Üye olma sayfasına git</b-button>
-      </nuxt-link>
-    </div>
-    <div>
-      <b-modal ref="my-modal" hide-footer title="Giriş başarılı!">
-        <div class="d-block text-center">
-          <h2>Başarılı şekilde giriş yaptın!</h2>
-        </div>
-        <b-button class="mt-3" variant="outline-danger" block @click="hideSuccessModal">Kapat</b-button>
-      </b-modal>
-      <b-modal ref="error-modal" hide-footer title="Giriş başarısız!">
-        <div class="d-block text-center">
-          <h2>Kullanıcı adı veya şifren yanlış!</h2>
-          <br>
-          <code>{{ this.errorText }}</code>
-        </div>
-        <b-button class="mt-3" variant="outline-danger" block @click="hideErrorModal">Kapat</b-button>
-      </b-modal>
-    </div>
+        </b-form>
+        <!--      <b-card class="mt-3" header="Kontrol tahtasdı">-->
+        <!--        <pre class="m-0">{{ form }}</pre>-->
+        <!--      </b-card>-->
+      </div>
+      <div v-if="!user" class="row col-10 col-lg-6 ml-3 pt-3">
+        <nuxt-link to="/register">
+          <b-button type="reset" variant="danger">Üye olma sayfasına git</b-button>
+        </nuxt-link>
+      </div>
+      <div v-else>Zaten giriş yapmışsınız. Bir sorun yaşıyor iseniz oturumu kapatıp tekrar açın.</div>
+      <div>
+        <b-modal ref="my-modal" hide-footer title="Giriş başarılı!">
+          <div class="d-block text-center">
+            <h2>Başarılı şekilde giriş yaptın!</h2>
+          </div>
+          <b-button class="mt-3" variant="outline-danger" block @click="hideSuccessModal">Kapat</b-button>
+        </b-modal>
+        <b-modal ref="error-modal" hide-footer title="Giriş başarısız!">
+          <div class="d-block text-center">
+            <h2>Kullanıcı adı veya şifren yanlış!</h2>
+            <br>
+            <code>{{ this.errorText }}</code>
+          </div>
+          <b-button class="mt-3" variant="outline-danger" block @click="hideErrorModal">Kapat</b-button>
+        </b-modal>
+      </div>
+    </client-only>
   </b-container>
 </template>
 
 <script>
 import {api} from "@/utils/api";
-import { mapState, mapMutations } from 'vuex';
+import {mapState, mapMutations} from 'vuex';
 
 export default {
   name: "login",
