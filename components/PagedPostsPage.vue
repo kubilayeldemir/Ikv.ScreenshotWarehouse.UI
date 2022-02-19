@@ -19,7 +19,16 @@ export default {
       }
     }
   },
-  props: {},
+  props: {
+    ignoreValidation: {
+      type: Boolean,
+      default: false
+    },
+    onlyNonValidatedPosts: {
+      type: Boolean,
+      default: false
+    }
+  },
   async fetch() {
     let query = "/post/paged?"
     if (this.$route.query.page) {
@@ -60,6 +69,12 @@ export default {
     addFilterParamsToQuery(query) {
       if (this.$route.params.username) {
         query = query + "&Username=" + this.$route.params.username
+      }
+      if (this.ignoreValidation) {
+        query = query + "&IgnoreValidation=" + true
+      }
+      if (this.onlyNonValidatedPosts) {
+        query = query + "&OnlyNonValidatedPosts=" + true
       }
       return query
     }

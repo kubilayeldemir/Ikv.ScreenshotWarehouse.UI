@@ -30,7 +30,7 @@ export default {
   async mounted() {
     if (process.browser) {
       try {
-        const res = await this.$axios.$get('/post/all', getAxiosConfigWithJwt());
+        const res = await this.$axios.$get('/post/paged', getAxiosConfigWithJwt());
         this.posts = res
         this.postsNew = res.map(x => ({url: x.fileUrl, title: "no-title", h: "1200"}))
       } catch (e) {
