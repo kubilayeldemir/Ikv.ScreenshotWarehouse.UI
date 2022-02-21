@@ -1,10 +1,11 @@
 <template>
   <div class="container mt-3">
     <div class="col-12 col-lg-8">
-      <p>Bu sayfa ile yüklemek istediğin görüntüleri çoklu olarak yükleyebilirsin</p>
-      <p>PNG veya JPG formatındaki dosyalar desteklenmektedir</p>
+      <p>Bu sayfa ile yüklemek istediğin ekran görüntülerini veya resimleri çoklu olarak yükleyebilirsin</p>
+      <p>PNG, JPEG veya JPG formatındaki dosyalar desteklenmektedir</p>
       <p>İkv ekran görüntülerin isimlerinden ne zaman çekildiği tarihi elde edilmektedir.
         Bu sayede ekran görüntülerini tarihlerine göre arayabileceksiniz.</p>
+      <p>Yüklediğiniz görüntüler bir moderatör tarafından incelendikten sonra yayınlanacaktır</p>
       <div v-if="!isUploading">
         <client-only>
           <b-form-file

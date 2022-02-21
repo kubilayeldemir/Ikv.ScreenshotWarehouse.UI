@@ -76,4 +76,19 @@ export default {
   background-color: rgb(24, 26, 27);
   border-color: rgb(60, 65, 68);
 }
+.pagination > li > a
+{
+  background-color: black;
+  color: #ffffff;
+}
+.pagination > li > a:hover
+{
+  background-color: #92a8d1;
+}
+.page-item.disabled .page-link {
+  color: #ffffff;
+  background-color: #000000;
+  border-color: #dee2e6;
+}
+
 </style>
