@@ -17,7 +17,13 @@
       </div>
     </div>
     <ImageComponent :lazy="true" v-for="(post,i) in posts" :key="post.id" :post="post"></ImageComponent>
-    <b-button v-if="paging.currentPage < paging.pageCount" @click="loadNextPage" variant="success"> ></b-button>
+    <b-button v-if="paging.currentPage < paging.pageCount" @click="loadNextPage" variant="success" class="m-2">
+      Resimleri yükle
+    </b-button>
+    <div class="overflow-auto">
+      <b-pagination-nav v-model="paging.currentPage" @change="changePage" :link-gen="linkGen" dark
+                        :number-of-pages="paging.pageCount" use-router></b-pagination-nav>
+    </div>
   </div>
 </template>
 
@@ -69,6 +75,19 @@ export default {
       this.setResPagingDataToData(res)
       this.posts = this.posts.concat(res.data)
       this.addHashToLocation(this.paging.currentPage)
+    },
+    linkGen(pageNum) {
+      return pageNum === 1 ? '?' : `?page=${pageNum}`
+    },
+    async changePage(pageNum) {
+      let query = "/post/paged?"
+      query = query + `CurrentPage=${pageNum}`
+      window.scrollTo(0, 0);
+      query = this.addFilterParamsToQuery(query)
+      var res = await this.$axios.$get(query);
+      this.setResPagingDataToData(res)
+      this.posts = res.data
+      this.addHashToLocation(pageNum)
     },
     async search() {
       let query = "/post/paged?"
@@ -132,4 +151,6 @@ export default {
   width: 100%;
   max-width: 900px;
 }
+
+
 </style>
