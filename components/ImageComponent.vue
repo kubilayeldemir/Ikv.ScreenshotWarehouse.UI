@@ -20,12 +20,16 @@
 <script>
 export default {
   name: "ImageComponent",
+  data() {
+    return {
+      viewPortWidth: 0,
+      dateOnly: "",
+      dateAndTime: ""
+    }
+  },
   props: {
     post: {},
-    lazy: false,
-    dateOnly: "",
-    dateAndTime: "",
-    viewPortWidth: 0
+    lazy: false
   },
   created() {
     const monthNames = ['zero', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']

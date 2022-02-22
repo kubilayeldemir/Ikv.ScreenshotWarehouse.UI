@@ -18,7 +18,7 @@
     </div>
     <ImageComponent class="mt-2 mb-2" :lazy="true" v-for="(post,i) in posts" :key="post.id"
                     :post="post"></ImageComponent>
-    <b-button v-if="paging.currentPage < paging.pageCount" @click="loadNextPage" variant="success" class="m-2">
+    <b-button v-if="paging.currentPage < paging.pageCount" @click="loadNextPage" variant="success" class="m-2 p-2">
       Resimleri yükle
     </b-button>
     <div class="overflow-auto">
