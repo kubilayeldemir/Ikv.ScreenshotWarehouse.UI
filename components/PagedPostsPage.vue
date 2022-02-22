@@ -21,10 +21,12 @@
     <b-button v-if="paging.currentPage < paging.pageCount" @click="loadNextPage" variant="success" class="m-2 p-2">
       Resimleri yükle
     </b-button>
-    <div class="overflow-auto">
-      <b-pagination-nav v-model="paging.currentPage" @change="changePage" :link-gen="linkGen" dark
-                        :number-of-pages="paging.pageCount" use-router></b-pagination-nav>
-    </div>
+    <client-only>
+      <div class="overflow-auto">
+        <b-pagination-nav v-model="paging.currentPage" @change="changePage" :link-gen="linkGen" dark
+                          :number-of-pages="paging.pageCount" use-router></b-pagination-nav>
+      </div>
+    </client-only>
   </div>
 </template>
 
@@ -35,8 +37,8 @@ export default {
     return {
       posts: {},
       paging: {
-        pageCount: 0,
-        currentPage: 0,
+        pageCount: 1,
+        currentPage: 1,
         pageSize: 0,
         rowCount: 0
       },
