@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3">
-    <div class="col-12 col-lg-8">
+    <div v-if="user" class="col-12 col-lg-8">
       <p>Bu sayfa ile yüklemek istediğin ekran görüntülerini veya resimleri çoklu olarak yükleyebilirsin</p>
       <p>PNG, JPEG veya JPG formatındaki dosyalar desteklenmektedir</p>
       <p>İkv ekran görüntülerin isimlerinden ne zaman çekildiği tarihi elde edilmektedir.
@@ -71,16 +71,22 @@
           </tbody>
         </table>
       </div>
+      <b-button class="mt-1 float-right " variant="danger"
+                @click="this.resetData">Sayfayı Temizle
+      </b-button>
     </div>
-    <b-button class="mt-1 float-right " variant="danger"
-              @click="this.resetData">Sayfayı Temizle
-    </b-button>
+    <div v-else>Resim yüklemek için lütfen giriş yapın.
+      <nuxt-link to="/login">
+        <b-button variant="info">Giriş yapma sayfasına git</b-button>
+      </nuxt-link>
+    </div>
   </div>
 </template>
 
 <script>
 import {getAxiosConfigWithJwt} from "~/utils/api";
 import {BIcon, BIconExclamationCircleFill, BIconQuestionCircleFill, BIconCheckCircleFill} from 'bootstrap-vue'
+import {mapState} from "vuex";
 
 export default {
   name: "upload",
@@ -99,6 +105,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(["user"]),
     saveButtonCondition: function () {
       if (!this.buttonDisabled) {
         return this.selectedFiles.length < 1
