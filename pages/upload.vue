@@ -63,7 +63,7 @@
             </td>
             <td>{{ res.id ? res.id : "-" }}</td>
             <td>
-              <a v-if="res.fileUrl" :href="res.fileUrl" target="_blank">Link</a>
+              <a v-if="res.fileUrl" :href="baseUrl + res.fileUrl" target="_blank">Link</a>
               <p v-else>-</p>
             </td>
             <td>{{ res.error ? res.error : "Yükleme Başarılı" }}</td>
@@ -101,7 +101,8 @@ export default {
       progressBarEnable: false,
       progressBarAnimate: true,
       progressBarValue: 0,
-      isUploaded: false
+      isUploaded: false,
+      baseUrl:"https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/"
     }
   },
   computed: {

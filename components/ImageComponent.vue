@@ -1,10 +1,10 @@
 <template>
   <div>
     <div v-if="lazy" v-lazy-container="{ selector: 'img' }">
-      <img :data-src="post.fileUrl">
+      <img :data-src="baseUrl + post.fileUrl">
     </div>
     <div v-else>
-      <img :src="post.fileUrl">
+      <img :src="baseUrl + post.fileUrl">
     </div>
     <NuxtLink :to="'/posts/'+post.id" class="text-decoration-none" style="  width: min-content"></NuxtLink>
     <div class="m-0 p-0 row" style="border-style: groove hidden hidden; border-color: grey;">
@@ -34,7 +34,8 @@ export default {
     return {
       viewPortWidth: 0,
       dateOnly: "",
-      dateAndTime: ""
+      dateAndTime: "",
+      baseUrl:"https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/"
     }
   },
   props: {

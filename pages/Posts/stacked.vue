@@ -24,7 +24,8 @@ export default {
     return {
       posts: [],
       postsNew: [],
-      index: null
+      index: null,
+      baseUrl:"https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/"
     }
   },
   async mounted() {
@@ -32,7 +33,7 @@ export default {
       try {
         const res = await this.$axios.$get('/post/paged', getAxiosConfigWithJwt());
         this.posts = res
-        this.postsNew = res.map(x => ({url: x.fileUrl, title: "no-title", h: "1200"}))
+        this.postsNew = res.data.map(x => ({url:  this.baseUrl + x.fileUrl, title: "no-title", h: "1200"}))
       } catch (e) {
         console.log(e)
       }
