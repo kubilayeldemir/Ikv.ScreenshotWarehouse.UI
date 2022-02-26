@@ -9,7 +9,7 @@
     <NuxtLink :to="'/posts/'+post.id" class="text-decoration-none" style="  width: min-content"></NuxtLink>
     <div class="m-0 p-0 row" style="border-style: groove hidden hidden; border-color: grey;">
       <div class="col-3 m-0 p-0">
-        <NuxtLink :to="'/u/'+post.username" class="text-decoration-none text-dark">
+        <NuxtLink :to="'/u/'+post.username" class="text-decoration-none text-white">
           {{ post.username }}
           <BIconLink></BIconLink>
         </NuxtLink>
