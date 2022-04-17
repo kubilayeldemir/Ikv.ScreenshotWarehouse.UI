@@ -6,6 +6,10 @@
       <p>İkv ekran görüntülerin isimlerinden ne zaman çekildiği tarihi elde edilmektedir.
         Bu sayede ekran görüntülerini tarihlerine göre arayabileceksiniz.</p>
       <p>Yüklediğiniz görüntüler bir moderatör tarafından incelendikten sonra yayınlanacaktır</p>
+      <div class="col-12 col-md-6 mb-3">
+        <label>Yüklediğiniz resimlerin çekildiği sunucu:</label>
+        <b-form-select v-model="selectedGameServer" :options="options"></b-form-select>
+      </div>
       <div v-if="!isUploading">
         <client-only>
           <b-form-file
@@ -102,7 +106,19 @@ export default {
       progressBarAnimate: true,
       progressBarValue: 0,
       isUploaded: false,
-      baseUrl:"https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/"
+      baseUrl: "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/",
+      selectedGameServer: null,
+      options: [
+        {value: 'Eminönü', text: 'Eminönü'},
+        {value: 'Beyazköşk', text: 'Beyazköşk'},
+        {value: 'Kuklacı', text: 'Kuklacı'},
+        {value: 'Tılsım', text: 'Tılsım'},
+        {value: 'Teşkilat', text: 'Teşkilat'},
+        {value: 'Sancak', text: 'Sancak'},
+        {value: 'Meran', text: 'Meran'},
+        {value: 'Anka', text: 'Anka'},
+        {value: 'Diğer', text: 'Diğer'}
+      ]
     }
   },
   computed: {
@@ -154,10 +170,13 @@ export default {
       var requestBody = []
       for (const x of files) {
         var base64Value = await this.toBase64(x)
-        requestBody.push({
-          fileName: x.name,
-          fileBase64: base64Value
-        })
+        var post = {}
+        post.fileName = x.name
+        post.fileBase64 = base64Value
+        if (this.selectedGameServer) {
+          post.gameServer = this.selectedGameServer
+        }
+        requestBody.push(post)
       }
       try {
         const res = await this.$axios.post('/post/bulk', requestBody, getAxiosConfigWithJwt());
@@ -200,7 +219,8 @@ export default {
           progressBarEnable: false,
           progressBarAnimate: true,
           progressBarValue: 0,
-          isUploaded: false
+          isUploaded: false,
+          selectedGameServer: null
         });
     }
   },
