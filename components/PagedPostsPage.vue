@@ -161,7 +161,8 @@ export default {
   },
   computed: {
     isSearchChanged: function () {
-      return this.startDate !== "2005-01-01" || this.endDate !== this.today || this.selectedGameServer;
+      return true
+      // return this.startDate !== "2005-01-01" || this.endDate !== this.today || this.selectedGameServer;
     }
   }
 }
