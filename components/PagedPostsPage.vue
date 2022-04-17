@@ -2,7 +2,7 @@
   <div>
     <div class="mt-1 middle">
       <div class="row col-12">
-        Aşağıdaki kutucuklara tarih aralığı girerek resimleri çekilme tarihlerine göre arayabilirsiniz.
+        Ekran görüntülerini yükleme tarihine ve sunucusuna göre arayabilirsiniz.
       </div>
       <div class="row">
         <div class="col-12 col-md-6">
@@ -13,6 +13,9 @@
           <label>Bitiş tarihi</label>
           <input type="date" :min="startDate" :max="today" v-model="endDate">
           <b-button @click="search" :disabled="!isSearchChanged" class="p-1 pb-0">Ara</b-button>
+        </div>
+        <div class="col-12 col-md-3" style="max-width: 50%">
+          <b-form-select v-model="selectedGameServer" :options="options"></b-form-select>
         </div>
       </div>
     </div>
@@ -45,6 +48,19 @@ export default {
       startDate: "2005-01-01",
       endDate: "2030-01-01",
       today: "",
+      selectedGameServer: null,
+      options: [
+        {value: null, text: 'Sunucu'},
+        {value: 'Eminönü', text: 'Eminönü'},
+        {value: 'Beyazköşk', text: 'Beyazköşk'},
+        {value: 'Kuklacı', text: 'Kuklacı'},
+        {value: 'Tılsım', text: 'Tılsım'},
+        {value: 'Teşkilat', text: 'Teşkilat'},
+        {value: 'Sancak', text: 'Sancak'},
+        {value: 'Meran', text: 'Meran'},
+        {value: 'Anka', text: 'Anka'},
+        {value: 'Diğer', text: 'Diğer'}
+      ]
     }
   },
   props: {
@@ -133,6 +149,9 @@ export default {
       if (this.endDate != this.today) {
         query = query + "&EndDate=" + this.endDate
       }
+      if (this.selectedGameServer) {
+        query = query + "&gameServer=" + this.selectedGameServer
+      }
       return query
     }
   },
@@ -142,7 +161,8 @@ export default {
   },
   computed: {
     isSearchChanged: function () {
-      return this.startDate !== "2005-01-01" || this.endDate !== this.today;
+      return true
+      // return this.startDate !== "2005-01-01" || this.endDate !== this.today || this.selectedGameServer;
     }
   }
 }
