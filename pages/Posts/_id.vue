@@ -1,9 +1,10 @@
 <template>
   <div class="container" ref="scrollToMe">
     <ImageComponent :post="this.post"></ImageComponent>
-    <p>Username: {{ post.username }}</p>
-    <p>title: {{ post.title }}</p>
-    <p>screenshotDate: {{ post.screenshotDate }}</p>
+    <p>Yükleyenin Kullanıcı adı: {{ post.username }}</p>
+    <p>Ekran Görüntüsü Tarihi: {{ post.screenshotDate }}</p>
+    <p>Sunucu: {{ post.gameServer }}</p>
+    <p>Başlık: {{ post.title }}</p>
   </div>
 </template>
 
