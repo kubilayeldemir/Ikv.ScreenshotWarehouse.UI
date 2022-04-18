@@ -17,6 +17,8 @@
         <NuxtLink :to="'/posts/'+post.id" class="text-decoration-none text-success">
           <BIconImage class="text-right"></BIconImage>
         </NuxtLink>
+        -
+        {{post.gameServer}}
       </div>
       <b-col class="col-9 text-right m-0 p-0" style="white-space:pre-wrap; word-break:break-word;"
              title="">{{ viewPortWidth < 300 ? dateOnly : dateAndTime }}
