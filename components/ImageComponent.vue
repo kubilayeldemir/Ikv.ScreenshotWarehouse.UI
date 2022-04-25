@@ -37,7 +37,7 @@ export default {
       viewPortWidth: 0,
       dateOnly: "",
       dateAndTime: "",
-      baseUrl:"https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/"
+      baseUrl:"https://res.cloudinary.com/dmo4hvhcj/image/upload/f_auto/v1645641514/"
     }
   },
   props: {
