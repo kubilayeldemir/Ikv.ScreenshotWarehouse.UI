@@ -1,5 +1,5 @@
 <template>
-  <PagedPostsPage category="forum" :raw-data-toggle="true"></PagedPostsPage>
+  <PagedPostsPage category="forum"></PagedPostsPage>
 </template>
 
 <script>
