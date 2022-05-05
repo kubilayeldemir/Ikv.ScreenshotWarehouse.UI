@@ -1,4 +1,5 @@
 export default {
+  mode: 'universal',
   env: {
     apiUrl: process.env.API_URL
   },
