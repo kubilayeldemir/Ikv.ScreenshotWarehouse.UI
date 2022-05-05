@@ -86,15 +86,7 @@ export default {
     }
   },
   async fetch() {
-    let query = "/post/paged?"
-    if (this.$route.query.page) {
-      query = query + "CurrentPage=" + this.$route.query.page
-    }
-    query = this.addFilterParamsToQuery(query)
-
-    var res = await this.$axios.$get(query);
-    this.setResPagingDataToData(res)
-    this.posts = res.data
+    await this.fetchPage()
   },
   methods: {
     async loadNextPage() {
@@ -109,6 +101,17 @@ export default {
     },
     linkGen(pageNum) {
       return pageNum === 1 ? '?' : `?page=${pageNum}`
+    },
+    async fetchPage() {
+      let query = "/post/paged?"
+      if (this.$route.query.page) {
+        query = query + "CurrentPage=" + this.$route.query.page
+      }
+      query = this.addFilterParamsToQuery(query)
+
+      var res = await this.$axios.$get(query);
+      this.setResPagingDataToData(res)
+      this.posts = res.data
     },
     async changePage(pageNum) {
       let query = "/post/paged?"
@@ -188,8 +191,8 @@ export default {
   },
   async mounted() {
     if (process.browser){
-      if (this.posts == null){
-        await this.fetch()
+      if (Object.keys(this.posts).length === 0){
+        await this.fetchPage()
       }
     }
   }
