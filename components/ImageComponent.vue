@@ -1,10 +1,15 @@
 <template>
   <div>
+    <div v-if="category==='forum'" class="m-0 p-0 row" style="border-style: dashed hidden hidden; border-color: grey;">
+      {{ post.title }}
+    </div>
     <div v-if="lazy" v-lazy-container="{ selector: 'img' }">
-      <img :data-src="baseUrl + post.fileUrl">
+      <img v-if="!useRawData" :data-src="baseUrl + post.fileUrl">
+      <img v-else :data-src="post.rawData.fileBase64">
     </div>
     <div v-else>
-      <img :src="baseUrl + post.fileUrl">
+      <img v-if="!useRawData" :src="baseUrl + post.fileUrl">
+      <img v-else :src="post.rawData.fileBase64">
     </div>
     <NuxtLink :to="'/posts/'+post.id" class="text-decoration-none" style="  width: min-content"></NuxtLink>
     <div class="m-0 p-0 row" style="border-style: groove hidden hidden; border-color: grey;">
@@ -17,8 +22,10 @@
         <NuxtLink :to="'/posts/'+post.id" class="text-decoration-none text-success">
           <BIconImage class="text-right"></BIconImage>
         </NuxtLink>
-        -
-        {{post.gameServer}}
+        <span v-if="category==='user'">
+          -
+          {{ post.gameServer }}
+        </span>
       </div>
       <b-col class="col-9 text-right m-0 p-0" style="white-space:pre-wrap; word-break:break-word;"
              title="">{{ viewPortWidth < 300 ? dateOnly : dateAndTime }}
@@ -37,12 +44,17 @@ export default {
       viewPortWidth: 0,
       dateOnly: "",
       dateAndTime: "",
-      baseUrl:"https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/"
+      baseUrl: "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/"
     }
   },
   props: {
     post: {},
-    lazy: false
+    lazy: false,
+    useRawData: false,
+    category: {
+      type: String,
+      default: "user"
+    }
   },
   mounted() {
     if (process.browser && this.post.screenshotDate) {

@@ -12,6 +12,9 @@
           <b-nav-item @click="routeToPosts">
             Resimler
           </b-nav-item>
+<!--          <b-nav-item @click="routeToForum">-->
+<!--            Forum Arşivi-->
+<!--          </b-nav-item>-->
           <b-nav-item @click="routeToUpload">
             Resim Yükle
           </b-nav-item>
@@ -69,6 +72,9 @@ export default {
     },
     routeToPosts() {
       this.$router.push("/posts")
+    },
+    routeToForum() {
+      this.$router.push("/posts/forum")
     },
     routeToUpload() {
       this.$router.push("/upload")

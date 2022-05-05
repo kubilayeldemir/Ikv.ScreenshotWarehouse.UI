@@ -20,7 +20,7 @@
       </div>
     </div>
     <ImageComponent class="mt-2 mb-2" :lazy="true" v-for="(post,i) in posts" :key="post.id"
-                    :post="post"></ImageComponent>
+                    :post="post" :use-raw-data="rawDataToggle || !post.fileUrl" :category="category"></ImageComponent>
     <b-button v-if="paging.currentPage < paging.pageCount" @click="loadNextPage" variant="success" class="m-2 p-2">
       Resimleri yükle
     </b-button>
@@ -69,6 +69,18 @@ export default {
       default: false
     },
     onlyNonValidatedPosts: {
+      type: Boolean,
+      default: false
+    },
+    category: {
+      type: String,
+      default: "user"
+    },
+    rawDataToggle: {
+      type: Boolean,
+      default: false
+    },
+    smartDataRetrieve: {
       type: Boolean,
       default: false
     }
@@ -134,6 +146,15 @@ export default {
       )
     },
     addFilterParamsToQuery(query) {
+      if (this.category != null) {
+        query = query + "&category=" + this.category
+      }
+      if (this.rawDataToggle && !this.smartDataRetrieve) {
+        query = query + "&includeRawData=" + this.rawDataToggle
+      }
+      if (this.smartDataRetrieve && !this.rawDataToggle){
+        query = query + "&IncludeRawDataIfNeeded=" + this.smartDataRetrieve
+      }
       if (this.$route.params.username) {
         query = query + "&Username=" + this.$route.params.username
       }
