@@ -1,4 +1,6 @@
 export default {
+  ssr: true,
+  target: "server",
   env: {
     apiUrl: process.env.API_URL
   },
