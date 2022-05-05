@@ -1,8 +1,7 @@
 <template>
   <div>
     <h1>{{ this.$route.params.username }} kullanıcısının resimlerine bakıyorsunuz.</h1>
-    <PagedPostsPage :smart-data-retrieve="true" :category="null"
-                    class="d-flex flex-column align-items-center"></PagedPostsPage>
+    <PagedPostsPage :category="null" class="d-flex flex-column align-items-center"></PagedPostsPage>
   </div>
 </template>
 
