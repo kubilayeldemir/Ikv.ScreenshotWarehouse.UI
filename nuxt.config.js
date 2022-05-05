@@ -1,8 +1,9 @@
 export default {
-  ssr: true,
-  target: "server",
   env: {
     apiUrl: process.env.API_URL
+  },
+  generate: {
+    routes: ['/u/Sowly', '/posts/forum']
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
