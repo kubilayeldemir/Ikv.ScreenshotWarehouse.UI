@@ -4,11 +4,11 @@
       {{ post.title }}
     </div>
     <div v-if="lazy" v-lazy-container="{ selector: 'img' }">
-      <img v-if="!useRawData" :data-src="baseUrl + post.fileUrl">
+      <img v-if="!useRawData" :data-src="getFileUrl">
       <img v-else :data-src="post.rawData.fileBase64">
     </div>
     <div v-else>
-      <img v-if="!useRawData" :src="baseUrl + post.fileUrl">
+      <img v-if="!useRawData" :src="getFileUrl">
       <img v-else :src="post.rawData.fileBase64">
     </div>
     <NuxtLink :to="'/posts/'+post.id" class="text-decoration-none" style="  width: min-content"></NuxtLink>
@@ -44,7 +44,8 @@ export default {
       viewPortWidth: 0,
       dateOnly: "",
       dateAndTime: "",
-      baseUrl: "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/"
+      baseUrlCloudinary: "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/",
+      baseUrlForumPosts: "https://ikvssapi.tk/"
     }
   },
   props: {
@@ -54,6 +55,19 @@ export default {
     category: {
       type: String,
       default: "user"
+    }
+  },
+  computed: {
+    getFileUrl: function () {
+      if (this.post.category == "user"){
+        return this.baseUrlCloudinary + this.post.fileUrl;
+      }
+      else if (this.post.category == "forum"){
+        return this.baseUrlForumPosts + this.post.fileUrl;
+      }
+      else {
+        return "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645876761/web/lazy_dy4ssu.jpg";
+      }
     }
   },
   mounted() {

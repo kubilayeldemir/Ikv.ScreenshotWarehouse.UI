@@ -20,7 +20,7 @@
       </div>
     </div>
     <ImageComponent class="mt-2 mb-2" :lazy="true" v-for="(post,i) in posts" :key="post.id"
-                    :post="post" :use-raw-data="rawDataToggle || !post.fileUrl" :category="category"></ImageComponent>
+                    :post="post" :use-raw-data="rawDataToggle" :category="category"></ImageComponent>
     <b-button v-if="paging.currentPage < paging.pageCount" @click="loadNextPage" variant="success" class="m-2 p-2">
       Resimleri yükle
     </b-button>
