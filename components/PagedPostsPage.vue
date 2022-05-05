@@ -19,12 +19,12 @@
         </div>
       </div>
     </div>
-    <ImageComponent class="mt-2 mb-2" :lazy="true" v-for="(post,i) in posts" :key="post.id"
-                    :post="post" :use-raw-data="rawDataToggle" :category="category"></ImageComponent>
-    <b-button v-if="paging.currentPage < paging.pageCount" @click="loadNextPage" variant="success" class="m-2 p-2">
-      Resimleri yükle
-    </b-button>
     <client-only>
+      <ImageComponent class="mt-2 mb-2" :lazy="true" v-for="(post,i) in posts" :key="post.id"
+                      :post="post" :use-raw-data="rawDataToggle" :category="category"></ImageComponent>
+      <b-button v-if="paging.currentPage < paging.pageCount" @click="loadNextPage" variant="success" class="m-2 p-2">
+        Resimleri yükle
+      </b-button>
       <div class="overflow-auto">
         <b-pagination-nav v-model="paging.currentPage" @change="changePage" :link-gen="linkGen" dark
                           :number-of-pages="paging.pageCount" use-router></b-pagination-nav>
@@ -152,7 +152,7 @@ export default {
       if (this.rawDataToggle && !this.smartDataRetrieve) {
         query = query + "&includeRawData=" + this.rawDataToggle
       }
-      if (this.smartDataRetrieve && !this.rawDataToggle){
+      if (this.smartDataRetrieve && !this.rawDataToggle) {
         query = query + "&IncludeRawDataIfNeeded=" + this.smartDataRetrieve
       }
       if (this.$route.params.username) {
