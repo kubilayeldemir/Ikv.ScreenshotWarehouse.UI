@@ -12,9 +12,9 @@
           <b-nav-item @click="routeToPosts">
             Resimler
           </b-nav-item>
-          <b-nav-item @click="routeToForum">
-            Forum Arşivi
-          </b-nav-item>
+<!--          <b-nav-item @click="routeToForum">-->
+<!--            Forum Arşivi-->
+<!--          </b-nav-item>-->
           <b-nav-item @click="routeToUpload">
             Resim Yükle
           </b-nav-item>
