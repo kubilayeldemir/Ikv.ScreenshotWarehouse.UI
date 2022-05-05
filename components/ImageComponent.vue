@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="category==='forum'" class="m-0 p-0 row" style="border-style: dashed hidden hidden; border-color: grey;">
+    <div v-if="category==='forum'" class="m-0 p-0 row">
       {{ post.title }}
     </div>
     <div v-if="lazy" v-lazy-container="{ selector: 'img' }">
