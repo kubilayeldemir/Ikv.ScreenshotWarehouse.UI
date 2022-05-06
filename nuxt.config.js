@@ -1,10 +1,9 @@
 export default {
   env: {
-    apiUrl: process.env.API_URL
+    apiUrl: process.env.API_URL,
+    API_URL: process.env.API_URL
   },
-  generate: {
-    routes: ['/u/Sowly', '/posts/forum']
-  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'İstanbul Kıyamet Vakti SS Deposu',
@@ -33,7 +32,7 @@ export default {
     {src: '~/plugins/vue-stack-grid.js', mode: 'client'},
     {src: '~/plugins/lightGallery.client.js', mode: 'client' },
     '@/plugins/axios',
-    { src: '~/plugins/vuex-persist', mode: 'client' },
+    { src: '~/plugins/vuex-persist.js', mode: 'client'},
     { src: '~/plugins/vue-lazy-load.js', mode: 'client' }
 
   ],
@@ -47,9 +46,9 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
+    ['@nuxtjs/axios', { baseURL: process.env.API_URL }],
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
     '@nuxtjs/gtm'
   ],
   gtm: {
@@ -59,14 +58,21 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: process.env.apiUrl,
+    baseURL: process.env.API_URL,
   },
   publicRuntimeConfig: {
+    API_URL: process.env.API_URL,
     axios: {
-      browserBaseURL: process.env.apiUrl
+      API_URL: process.env.API_URL,
+      browserBaseURL: process.env.API_URL
     }
   },
-
+  privateRuntimeConfig: {
+    API_URL: process.env.API_URL,
+    axios: {
+      browserBaseURL: process.env.API_URL
+    }
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {}
 }
