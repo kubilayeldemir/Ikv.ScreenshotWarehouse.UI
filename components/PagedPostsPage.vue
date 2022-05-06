@@ -185,13 +185,6 @@ export default {
       return true
       // return this.startDate !== "2005-01-01" || this.endDate !== this.today || this.selectedGameServer;
     }
-  },
-  async mounted() {
-    if (process.browser){
-      if (this.posts == null){
-        await this.fetch()
-      }
-    }
   }
 }
 </script>
