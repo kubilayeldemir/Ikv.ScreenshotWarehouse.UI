@@ -5,10 +5,11 @@
     </div>
 
     <b-row class="mt-3">
-      <div class="col-12 col-lg-4">
+      <div class="col-12 col-lg-4 text-center text-md-left p-2">
         <NuxtLink to="/posts" class="link-text">
           <b-row class="pb-3">
-            <div class="col-12"><img
+            <div class="col-12">
+              <img class="d-block mx-auto mx-md-0"
               src="https://res.cloudinary.com/dmo4hvhcj/image/upload/v1651842135/web/client_psdida.jpg"/>
             </div>
           </b-row>
@@ -16,11 +17,12 @@
         </NuxtLink>
       </div>
       <div class="col-0 col-lg-4"></div>
-      <div class="col-12 col-lg-4 mt-5 mt-lg-0">
+      <div class="col-12 col-lg-4 mt-5 mt-lg-0 text-center text-md-left p-2">
         <NuxtLink to="/posts/forum" class="link-text">
           <b-row class="pb-3">
-            <div class="col-12"><img
-              src="https://res.cloudinary.com/dmo4hvhcj/image/upload/v1651843521/web/ikvv_vdikxr.jpg"/>
+            <div class="col-12">
+              <img class="d-block mx-auto mx-md-0"
+                src="https://res.cloudinary.com/dmo4hvhcj/image/upload/v1651843521/web/ikvv_vdikxr.jpg"/>
             </div>
           </b-row>
           Forum Arşivine Bakmak İçin Tıkla
@@ -70,7 +72,9 @@ export default {
 </script>
 
 <style scoped>
-.link-text{
-  color: white;text-decoration: none;font-family:'Courier New';
+.link-text {
+  color: white;
+  text-decoration: none;
+  font-family: 'Courier New';
 }
 </style>
