@@ -1,5 +1,5 @@
 <template>
-  <PagedPostsPage></PagedPostsPage>
+  <PagedPostsPage :server-searchbar-toggle="true"></PagedPostsPage>
 </template>
 
 <script>

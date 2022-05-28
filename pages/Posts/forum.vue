@@ -1,5 +1,5 @@
 <template>
-  <PagedPostsPage category="forum"></PagedPostsPage>
+  <PagedPostsPage category="forum" sort-field="screenshotDate"></PagedPostsPage>
 </template>
 
 <script>
