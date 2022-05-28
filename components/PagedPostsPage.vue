@@ -14,7 +14,7 @@
           <input type="date" :min="startDate" :max="today" v-model="endDate">
           <b-button @click="search" :disabled="!isSearchChanged" class="p-1 pb-0">Ara</b-button>
         </div>
-        <div class="col-12 col-md-3" style="max-width: 50%">
+        <div v-if="this.serverSearchbarToggle" class="col-12 col-md-3" style="max-width: 50%">
           <b-form-select v-model="selectedGameServer" :options="options"></b-form-select>
         </div>
       </div>
@@ -83,7 +83,15 @@ export default {
     smartDataRetrieve: {
       type: Boolean,
       default: false
-    }
+    },
+    sortField: {
+      type: String,
+      default: null
+    },
+    serverSearchbarToggle: {
+      type: Boolean,
+      default: false
+    },
   },
   async fetch() {
     let query = "/post/paged?"
@@ -146,13 +154,17 @@ export default {
       )
     },
     addFilterParamsToQuery(query) {
+      if (this.sortField) {
+        query = query + "&sortField=" + this.sortField
+      }
+
       if (this.category != null) {
         query = query + "&category=" + this.category
       }
       if (this.rawDataToggle && !this.smartDataRetrieve) {
         query = query + "&includeRawData=" + this.rawDataToggle
       }
-      if (this.smartDataRetrieve && !this.rawDataToggle){
+      if (this.smartDataRetrieve && !this.rawDataToggle) {
         query = query + "&IncludeRawDataIfNeeded=" + this.smartDataRetrieve
       }
       if (this.$route.params.username) {
