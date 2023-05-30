@@ -45,7 +45,7 @@ export default {
       dateOnly: "",
       dateAndTime: "",
       baseUrlCloudinary: "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645641514/",
-      baseUrlForumPosts: "https://ikvssapi.tk/"
+      baseUrlForumPosts: "https://ikeve.wiki/"
     }
   },
   props: {
