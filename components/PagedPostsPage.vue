@@ -28,6 +28,18 @@
       <div class="overflow-auto">
         <b-pagination-nav v-model="paging.currentPage" @change="changePage" :link-gen="linkGen" dark
                           :number-of-pages="paging.pageCount" use-router></b-pagination-nav>
+        <div class="input-group input-group-sm mb-3">
+
+          <b-form-input type="number" v-model="paging.goToPageNumber" min="1" :max="paging.pageCount"
+                        @keydown.enter="changePage(paging.goToPageNumber)"
+                        :class="['form-control', { 'is-invalid': isInputInvalid }]" placeholder="Sayfa No"
+                        aria-label="Sayfa No" aria-describedby="basic-addon2"></b-form-input>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" @click="changePage(paging.goToPageNumber)" type="button"
+                    :disabled="!paging.goToPageNumber">Git
+            </button>
+          </div>
+        </div>
       </div>
     </client-only>
   </div>
@@ -43,7 +55,8 @@ export default {
         pageCount: 1,
         currentPage: 1,
         pageSize: 0,
-        rowCount: 0
+        rowCount: 0,
+        goToPageNumber: null
       },
       startDate: "2005-01-01",
       endDate: "2030-01-01",
@@ -119,6 +132,10 @@ export default {
       return pageNum === 1 ? '?' : `?page=${pageNum}`
     },
     async changePage(pageNum) {
+      if (pageNum < 1 || pageNum > this.paging.pageCount) {
+        return
+      }
+      this.paging.goToPageNumber = null
       let query = "/post/paged?"
       query = query + `CurrentPage=${pageNum}`
       window.scrollTo(0, 0);
@@ -196,6 +213,10 @@ export default {
     isSearchChanged: function () {
       return true
       // return this.startDate !== "2005-01-01" || this.endDate !== this.today || this.selectedGameServer;
+    },
+    isInputInvalid() {
+      if (!this.paging.goToPageNumber) return false
+      return this.paging.goToPageNumber > this.paging.pageCount || this.paging.goToPageNumber < 1;
     }
   }
 }
@@ -207,4 +228,5 @@ export default {
   width: 100%;
   max-width: 900px;
 }
+
 </style>
