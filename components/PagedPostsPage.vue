@@ -27,7 +27,7 @@
     <client-only>
       <div class="overflow-auto">
         <b-pagination-nav v-model="paging.currentPage" @change="changePage" :link-gen="linkGen" dark
-                          :number-of-pages="paging.pageCount" use-router></b-pagination-nav>
+                          :number-of-pages="paging.pageCount" use-router last-number></b-pagination-nav>
         <div class="input-group input-group-sm mb-3">
 
           <b-form-input type="number" v-model="paging.goToPageNumber" min="1" :max="paging.pageCount"
