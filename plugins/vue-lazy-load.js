@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueLazyload from 'vue-lazyload'
 
-const loadimage = "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645876761/web/lazy_dy4ssu.jpg"
-const errorimage = "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1644779815/web/1_naxsvg.jpg"
+const loadimage = "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1685806656/lazy_dy4ssu_ou8e0u.jpg"
+const errorimage = "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1685806851/hata_tzgpgy.jpg"
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,

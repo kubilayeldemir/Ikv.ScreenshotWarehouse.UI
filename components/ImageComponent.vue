@@ -59,14 +59,12 @@ export default {
   },
   computed: {
     getFileUrl: function () {
-      if (this.post.category == "user"){
+      if (this.post.category == "user") {
         return this.baseUrlCloudinary + this.post.fileUrl;
-      }
-      else if (this.post.category == "forum"){
+      } else if (this.post.category == "forum") {
         return this.baseUrlForumPosts + this.post.fileUrl;
-      }
-      else {
-        return "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1645876761/web/lazy_dy4ssu.jpg";
+      } else {
+        return "https://res.cloudinary.com/dmo4hvhcj/image/upload/v1685806656/lazy_dy4ssu_ou8e0u.jpg";
       }
     }
   },
