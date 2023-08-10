@@ -91,14 +91,13 @@ export default {
       event.preventDefault()
       try {
         const res = await api.post('/user/login', this.form);
-        if (res.status == 200) {
+        if (res.status === 200) {
           let d = new Date();
-          d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+          d.setTime(d.getTime() + 3640 * 24 * 60 * 60 * 1000);
           let expires = "expires=" + d.toUTCString();
           document.cookie =
             "jwt=" + res.data.jwt + ";" + expires + ";path=/";
           this.$store.commit('loginUser', res.data.user)
-          // this.showSuccessModal()
           this.$router.push('/')
         } else {
           this.showErrorModal()

@@ -28,6 +28,18 @@ export default {
   },
   methods:{
     ...mapMutations(['loginUser'])
+  },
+  mounted() {
+    const cookies = document.cookie.split(';');
+    const desiredCookie = 'jwt';
+
+    const cookieExists = cookies.some(cookie => {
+      return cookie.trim().startsWith(`${desiredCookie}=`);
+    });
+
+    if (!cookieExists) {
+      this.$store.commit('logoutUser')
+    }
   }
 }
 </script>
