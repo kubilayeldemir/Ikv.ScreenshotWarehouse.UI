@@ -15,28 +15,18 @@
           <b-nav-item @click="routeToForum">
             Forum Arşivi
           </b-nav-item>
+          <b-nav-item @click="routeToRandom">
+            Rastgele
+          </b-nav-item>
           <b-nav-item @click="routeToUpload">
             Resim Yükle
           </b-nav-item>
-          <!--          <b-nav-item>-->
-          <!--            <nuxt-link to="/posts">Resimlerrr</nuxt-link>-->
-          <!--          </b-nav-item>-->
         </b-navbar-nav>
-
-        <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <!--            asd-->
           </b-nav-form>
-          <!--          <b-nav-item-dropdown text="Lang" right>-->
-          <!--            <b-dropdown-item href="#">EN</b-dropdown-item>-->
-          <!--            <b-dropdown-item href="#">ES</b-dropdown-item>-->
-          <!--            <b-dropdown-item href="#">RU</b-dropdown-item>-->
-          <!--            <b-dropdown-item href="#">FA</b-dropdown-item>-->
-          <!--          </b-nav-item-dropdown>-->
           <client-only>
             <b-nav-item-dropdown v-if="user" right>
-              <!-- Using 'button-content' slot -->
               <template #button-content>
                 <em>{{ user.username }}</em>
               </template>
@@ -75,6 +65,9 @@ export default {
     },
     routeToForum() {
       this.$router.push("/posts/forum")
+    },
+    routeToRandom() {
+      this.$router.push("/posts/random")
     },
     routeToUpload() {
       this.$router.push("/upload")

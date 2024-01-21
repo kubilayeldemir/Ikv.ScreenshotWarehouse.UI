@@ -10,7 +10,7 @@
           <b-row class="pb-3">
             <div class="col-12">
               <img class="d-block mx-auto mx-md-0"
-              src="https://res.cloudinary.com/dmo4hvhcj/image/upload/v1651842135/web/client_psdida.jpg"/>
+                   src="https://res.cloudinary.com/dmo4hvhcj/image/upload/v1651842135/web/client_psdida.jpg"/>
             </div>
           </b-row>
           Ekran görüntülerine bakmak için tıkla
@@ -22,13 +22,16 @@
           <b-row class="pb-3">
             <div class="col-12">
               <img class="d-block mx-auto mx-md-0"
-                src="https://res.cloudinary.com/dmo4hvhcj/image/upload/v1651843521/web/ikvv_vdikxr.jpg"/>
+                   src="https://res.cloudinary.com/dmo4hvhcj/image/upload/v1651843521/web/ikvv_vdikxr.jpg"/>
             </div>
           </b-row>
           Forum Arşivine Bakmak İçin Tıkla
         </NuxtLink>
       </div>
     </b-row>
+    <b-button class="mt-1" variant="success"
+              @click="this.routeToRandom">Rastgele 🎣
+    </b-button>
 
     <div class="pb-3 mt-3">
       İkv Forumdaki yüklediğin fotoğrafları görmek ister misin?
@@ -59,7 +62,10 @@ export default {
   methods: {
     routeToUserPage() {
       this.$router.push("/u/" + this.searchByUsername)
-    }
+    },
+    routeToRandom() {
+      this.$router.push("/posts/random")
+    },
   },
   meta: [
     {
