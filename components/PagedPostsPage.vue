@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="mt-1 middle">
-      <div class="row col-12">
+      <div v-if="this.serverSearchbarToggle" class="row col-12">
         Ekran görüntülerini yükleme tarihine ve sunucusuna göre arayabilirsiniz.
       </div>
-      <div class="row">
+      <div class="row" v-if="this.dateSearchToggle">
         <div class="col-12 col-md-6">
           <label>Başlangıç tarihi</label>
           <input type="date" :min="startDate" :max="today" v-model="startDate">
@@ -21,11 +21,12 @@
     </div>
     <ImageComponent class="mt-2 mb-2" :lazy="true" v-for="(post,i) in posts" :key="post.id"
                     :post="post" :use-raw-data="rawDataToggle" :category="post.category"></ImageComponent>
-    <b-button v-if="paging.currentPage < paging.pageCount" @click="loadNextPage" variant="success" class="m-2 p-2">
+    <b-button v-if="paging.currentPage < paging.pageCount || this.isRandomPage" @click="loadNextPage"
+              variant="success" class="m-2 p-2">
       Resimleri yükle
     </b-button>
     <client-only>
-      <div class="overflow-auto">
+      <div class="overflow-auto" v-if="this.paginationToggle">
         <b-pagination-nav v-model="paging.currentPage" @change="changePage" :link-gen="linkGen" dark
                           :number-of-pages="paging.pageCount" use-router last-number></b-pagination-nav>
         <div class="input-group input-group-sm mb-3">
@@ -105,9 +106,26 @@ export default {
       type: Boolean,
       default: false
     },
+    dateSearchToggle: {
+      type: Boolean,
+      default: true
+    },
+    paginationToggle: {
+      type: Boolean,
+      default: true
+    },
+    isRandomPage: {
+      type: Boolean,
+      default: false
+    },
   },
   async fetch() {
-    let query = "/post/paged?"
+    let query = ""
+    if (this.isRandomPage) {
+      query = "/post/random?"
+    } else {
+      query = "/post/paged?"
+    }
     if (this.$route.query.page) {
       query = query + "CurrentPage=" + this.$route.query.page
     }
@@ -120,6 +138,12 @@ export default {
   methods: {
     async loadNextPage() {
       let query = "/post/paged?"
+      if (this.isRandomPage) {
+        query = "/post/random?"
+      } else {
+        query = "/post/paged?"
+      }
+
       query = query + `CurrentPage=${this.paging.currentPage + 1}`
 
       query = this.addFilterParamsToQuery(query)
