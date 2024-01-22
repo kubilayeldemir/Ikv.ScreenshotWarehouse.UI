@@ -33,6 +33,10 @@
               @click="this.routeToRandom">Rastgele 🎣
     </b-button>
 
+    <b-button class="mt-1" variant="success"
+              @click="this.routeToTopThreads">Başlıklar
+    </b-button>
+
     <div class="pb-3 mt-3">
       İkv Forumdaki yüklediğin fotoğrafları görmek ister misin?
       Aşağıya ikv forum kullanıcı adını yaz!
@@ -66,6 +70,9 @@ export default {
     routeToRandom() {
       this.$router.push("/posts/random")
     },
+    routeToTopThreads() {
+      this.$router.push("/posts/top-threads")
+    }
   },
   meta: [
     {
