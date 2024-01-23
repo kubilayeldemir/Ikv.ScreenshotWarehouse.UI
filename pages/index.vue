@@ -34,7 +34,7 @@
     </b-button>
 
     <b-button class="mt-1" variant="success"
-              @click="this.routeToTopThreads">Başlıklar
+              @click="this.routeToTopThreads">Popüler Başlıklar🥰
     </b-button>
 
     <div class="pb-3 mt-3">

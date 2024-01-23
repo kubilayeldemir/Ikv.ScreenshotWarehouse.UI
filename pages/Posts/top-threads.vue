@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p class="text pt-2">Toplam Resim Sayısı: 22743</p>
     <div class="container mt-4">
       <table class="table table-bordered ">
         <thead>
@@ -15,7 +16,7 @@
         <tr v-for="(post,i) in posts" :key="i" class="text">
           <td>{{ post.c }}</td>
           <td style="color: #94cdcd;">
-            <NuxtLink :to="'/posts/'+post.m" class="text-decoration-none text-white font-weight-bold clickable-text">
+            <NuxtLink :to="'/t/'+post.m" class="text-decoration-none text-white font-weight-bold clickable-text">
               {{ post.t }}
             </NuxtLink>
           </td>

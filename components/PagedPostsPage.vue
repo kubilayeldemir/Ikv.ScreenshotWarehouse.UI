@@ -217,6 +217,9 @@ export default {
       if (this.onlyNonValidatedPosts) {
         query = query + "&OnlyNonValidatedPosts=" + true
       }
+      if (this.$route.params.thread) {
+        query = query + "&titleMd5=" + this.$route.params.thread
+      }
       if (this.startDate != "2005-01-01") {
         query = query + "&StarDate=" + this.startDate
       }
