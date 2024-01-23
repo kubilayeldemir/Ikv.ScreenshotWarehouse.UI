@@ -18,6 +18,9 @@
           <b-nav-item @click="routeToRandom">
             Rastgele
           </b-nav-item>
+          <b-nav-item @click="routeToTopThreads">
+            Başlıklar
+          </b-nav-item>
           <b-nav-item @click="routeToUpload">
             Resim Yükle
           </b-nav-item>
@@ -71,7 +74,10 @@ export default {
     },
     routeToUpload() {
       this.$router.push("/upload")
-    }
+    },
+    routeToTopThreads() {
+      this.$router.push("/posts/top-threads")
+    },
   }
 }
 </script>
