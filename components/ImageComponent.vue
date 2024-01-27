@@ -4,12 +4,10 @@
       {{ post.title }}
     </div>
     <div v-if="lazy" v-lazy-container="{ selector: 'img' }">
-      <img v-if="!useRawData" :data-src="getFileUrl">
-      <img v-else :data-src="post.rawData.fileBase64">
+      <img @click="divClicked" :data-src="getFileUrl">
     </div>
-    <div v-else>
-      <img v-if="!useRawData" :src="getFileUrl">
-      <img v-else :src="post.rawData.fileBase64">
+    <div v-else >
+      <img :src="getFileUrl">
     </div>
     <NuxtLink :to="'/posts/'+post.id" class="text-decoration-none" style="  width: min-content"></NuxtLink>
     <div class="m-0 p-0 row" style="border-style: groove hidden hidden; border-color: grey;">
@@ -55,7 +53,8 @@ export default {
     category: {
       type: String,
       default: "user"
-    }
+    },
+    index: null
   },
   computed: {
     getFileUrl: function () {
@@ -81,7 +80,12 @@ export default {
   components: {
     BIconLink,
     BIconImage
-  }
+  },
+  methods: {
+    divClicked() {
+      this.$emit('divClicked', this.index)
+    }
+  },
 }
 </script>
 

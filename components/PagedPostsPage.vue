@@ -19,8 +19,17 @@
         </div>
       </div>
     </div>
-    <ImageComponent class="mt-2 mb-2" :lazy="true" v-for="(post,i) in posts" :key="post.id"
-                    :post="post" :use-raw-data="rawDataToggle" :category="post.category"></ImageComponent>
+    <div>
+      <client-only>
+        <LightGallery :images="posts" :index="index" @close="index = null"></LightGallery>
+      </client-only>
+    </div>
+
+    <ImageComponent @divClicked="imageClickEmitted" class="mt-2 mb-2" :lazy="true" v-for="(post,i) in posts" :key="post.id"
+                    :index="i"
+                    :post="post" :category="post.category"></ImageComponent>
+
+
     <b-button v-if="paging.currentPage < paging.pageCount || this.isRandomPage" @click="loadNextPage"
               variant="success" class="m-2 p-2">
       Resimleri yükle
@@ -52,6 +61,7 @@ export default {
   data() {
     return {
       posts: {},
+      index: null,
       paging: {
         pageCount: 1,
         currentPage: 1,
@@ -90,14 +100,6 @@ export default {
       type: String,
       default: "user"
     },
-    rawDataToggle: {
-      type: Boolean,
-      default: false
-    },
-    smartDataRetrieve: {
-      type: Boolean,
-      default: false
-    },
     sortField: {
       type: String,
       default: null
@@ -134,6 +136,9 @@ export default {
     var res = await this.$axios.$get(query);
     this.setResPagingDataToData(res)
     this.posts = res.data
+    this.posts.forEach(post => {
+      post.url = "https://ikeve.wiki/" + post.fileUrl;
+    });
   },
   methods: {
     async loadNextPage() {
@@ -149,7 +154,8 @@ export default {
       query = this.addFilterParamsToQuery(query)
       var res = await this.$axios.$get(query);
       this.setResPagingDataToData(res)
-      this.posts = this.posts.concat(res.data)
+      let tempPosts = this.posts.concat(res.data)
+      this.setPosts(tempPosts)
       this.addHashToLocation(this.paging.currentPage)
     },
     linkGen(pageNum) {
@@ -166,7 +172,7 @@ export default {
       query = this.addFilterParamsToQuery(query)
       var res = await this.$axios.$get(query);
       this.setResPagingDataToData(res)
-      this.posts = res.data
+      this.setPosts(res.data)
       this.addHashToLocation(pageNum)
     },
     async search() {
@@ -179,7 +185,7 @@ export default {
 
       var res = await this.$axios.$get(query);
       this.setResPagingDataToData(res)
-      this.posts = res.data
+      this.setPosts(res.data)
     },
     setResPagingDataToData(res) {
       this.paging.pageCount = res.pageCount
@@ -201,12 +207,6 @@ export default {
 
       if (this.category != null) {
         query = query + "&category=" + this.category
-      }
-      if (this.rawDataToggle && !this.smartDataRetrieve) {
-        query = query + "&includeRawData=" + this.rawDataToggle
-      }
-      if (this.smartDataRetrieve && !this.rawDataToggle) {
-        query = query + "&IncludeRawDataIfNeeded=" + this.smartDataRetrieve
       }
       if (this.$route.params.username) {
         query = query + "&Username=" + this.$route.params.username
@@ -230,6 +230,15 @@ export default {
         query = query + "&gameServer=" + this.selectedGameServer
       }
       return query
+    },
+    imageClickEmitted(index) {
+      this.index = index;
+    },
+    setPosts(posts){
+      posts.forEach(post => {
+        post.url = "https://ikeve.wiki/" + post.fileUrl;
+      });
+      this.posts = posts
     }
   },
   created() {
