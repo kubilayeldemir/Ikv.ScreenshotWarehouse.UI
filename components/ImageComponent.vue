@@ -2,7 +2,7 @@
   <div>
     <div v-if="category==='forum'" class="m-0 p-0 row">
       <client-only>
-        <NuxtLink v-if="post.title" :to="'/t/'+ toMd5(post.title)" class="text-decoration-none" style="width: min-content">
+        <NuxtLink v-if="post.title" :to="'/t/'+ this.$md5(post.title)" class="text-decoration-none" style="width: min-content">
           📁
         </NuxtLink>
       </client-only>
@@ -85,11 +85,6 @@ export default {
   components: {
     BIconLink,
     BIconImage
-  },
-  methods: {
-    toMd5: function (text) {
-      return this.$md5(text);
-    }
   }
 }
 </script>
