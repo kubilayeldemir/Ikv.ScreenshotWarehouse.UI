@@ -1,9 +1,11 @@
 <template>
   <div>
     <div v-if="category==='forum'" class="m-0 p-0 row">
-      <NuxtLink v-if="post.title" :to="'/t/'+ toMd5(post.title)" class="text-decoration-none" style="width: min-content">
-        📁
-      </NuxtLink>
+      <client-only>
+        <NuxtLink v-if="post.title" :to="'/t/'+ toMd5(post.title)" class="text-decoration-none" style="width: min-content">
+          📁
+        </NuxtLink>
+      </client-only>
       {{ post.title }}
     </div>
     <div v-if="lazy" v-lazy-container="{ selector: 'img' }">
