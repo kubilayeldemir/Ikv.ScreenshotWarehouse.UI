@@ -2,7 +2,7 @@
   <div>
     <div v-if="category==='forum'" class="m-0 p-0 row">
       <client-only>
-        <NuxtLink v-if="post.title" :to="'/t/'+ this.$md5(post.title)" class="text-decoration-none" style="width: min-content">
+        <NuxtLink v-if="post.title" :to="'/t/'+ toMd5(post.title)" class="text-decoration-none" style="width: min-content">
           📁
         </NuxtLink>
       </client-only>
@@ -80,6 +80,14 @@ export default {
       this.dateOnly = yearMonthDate[2] + " " + monthNames[parseInt(yearMonthDate[1], 10)] + " " + yearMonthDate[0]
       this.dateAndTime = this.dateOnly + " " + dateSplitWithT[1].split('.')[0]
       this.viewPortWidth = window.innerWidth;
+    }
+  },
+  methods: {
+    toMd5(text) {
+      if (process.client && this.$md5) {
+        return this.$md5(text);
+      }
+      return '';
     }
   },
   components: {
