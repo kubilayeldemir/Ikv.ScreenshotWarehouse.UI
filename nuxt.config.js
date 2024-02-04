@@ -33,8 +33,8 @@ export default {
     {src: '~/plugins/lightGallery.client.js', mode: 'client' },
     '@/plugins/axios',
     { src: '~/plugins/vuex-persist.js', mode: 'client'},
-    { src: '~/plugins/vue-lazy-load.js', mode: 'client' }
-
+    { src: '~/plugins/vue-lazy-load.js', mode: 'client' },
+    { src: '~/plugins/md5.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
