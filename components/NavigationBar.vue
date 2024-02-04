@@ -24,6 +24,9 @@
           <b-nav-item @click="routeToUpload">
             Resim Yükle
           </b-nav-item>
+          <b-nav-item @click="routeToDownloads">
+            İndir
+          </b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
@@ -77,6 +80,9 @@ export default {
     },
     routeToTopThreads() {
       this.$router.push("/posts/top-threads")
+    },
+    routeToDownloads() {
+      this.$router.push("/download")
     },
   }
 }
