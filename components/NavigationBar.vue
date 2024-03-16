@@ -54,24 +54,6 @@ export default {
     routeToRegister() {
       this.$router.push("/register")
     },
-    routeToPosts() {
-      this.$router.push("/posts")
-    },
-    routeToForum() {
-      this.$router.push("/posts/forum")
-    },
-    routeToRandom() {
-      this.$router.push("/posts/random")
-    },
-    routeToUpload() {
-      this.$router.push("/upload")
-    },
-    routeToTopThreads() {
-      this.$router.push("/posts/top-threads")
-    },
-    routeToDownloads() {
-      this.$router.push("/download")
-    },
   }
 }
 </script>
