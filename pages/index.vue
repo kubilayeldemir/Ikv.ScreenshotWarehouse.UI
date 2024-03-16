@@ -70,18 +70,6 @@ export default {
   methods: {
     routeToUserPage() {
       this.$router.push("/u/" + this.searchByUsername)
-    },
-    routeToRandom() {
-      this.$router.push("/posts/random")
-    },
-    routeToTopThreads() {
-      this.$router.push("/posts/top-threads")
-    },
-    routeToDownloads() {
-      this.$router.push("/download")
-    },
-    routeToAnnouncements() {
-      this.$router.push("/duyurular")
     }
   },
   meta: [
