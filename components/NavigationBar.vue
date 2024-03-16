@@ -2,31 +2,19 @@
   <div style="border-style: groove hidden ridge; border-color: grey;">
     <b-navbar toggleable="lg" type="dark" variant="dark">
       <b-navbar-brand>
-        <nuxt-link to="/">Anasayfa</nuxt-link>
+        <nuxt-link class="nuxtlink" to="/">Anasayfa</nuxt-link>
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item @click="routeToPosts">
-            Resimler
-          </b-nav-item>
-          <b-nav-item @click="routeToForum">
-            Forum Arşivi
-          </b-nav-item>
-          <b-nav-item @click="routeToRandom">
-            Rastgele
-          </b-nav-item>
-          <b-nav-item @click="routeToTopThreads">
-            Başlıklar
-          </b-nav-item>
-          <b-nav-item @click="routeToUpload">
-            Resim Yükle
-          </b-nav-item>
-          <b-nav-item @click="routeToDownloads">
-            İndir
-          </b-nav-item>
+        <b-navbar-nav class="links">
+          <NuxtLink class="nuxtlink nav-link" to="/posts">Resimler</NuxtLink>
+          <NuxtLink class="nuxtlink nav-link" to="/posts/forum">Forum Arşivi</NuxtLink>
+          <NuxtLink class="nuxtlink nav-link" to="/posts/random">Rastgele</NuxtLink>
+          <NuxtLink class="nuxtlink nav-link" to="/posts/top-threads">Başlıklar</NuxtLink>
+          <NuxtLink class="nuxtlink nav-link" to="/upload">Resim Yükle</NuxtLink>
+          <NuxtLink class="nuxtlink nav-link" to="/download">İndir</NuxtLink>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
@@ -89,7 +77,7 @@ export default {
 </script>
 
 <style scoped>
-a {
+.nuxtlink {
   color: inherit; /* blue colors for links too */
   text-decoration: inherit; /* no underline */
 }

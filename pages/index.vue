@@ -29,22 +29,18 @@
         </NuxtLink>
       </div>
     </b-row>
-    <b-button class="mt-1" variant="success"
-              @click="this.routeToRandom">Rastgele 🎣
+    <b-button class="mt-1" variant="success">
+      <NuxtLink class="nuxtlink nav-link" to="/posts/random">Rastgele 🎣</NuxtLink>
     </b-button>
-
-    <b-button class="mt-1" variant="success"
-              @click="this.routeToTopThreads">Popüler Başlıklar🥰
+    <b-button class="mt-1" variant="success">
+      <NuxtLink class="nuxtlink nav-link" to="/posts/top-threads">Popüler Başlıklar🥰</NuxtLink>
     </b-button>
-
-    <b-button class="mt-1" variant="success"
-              @click="this.routeToDownloads">Resimleri İndir/Yedekle
+    <b-button class="mt-1" variant="success">
+      <NuxtLink class="nuxtlink nav-link" to="/download">Resimleri İndir/Yedekle</NuxtLink>
     </b-button>
-
-    <b-button class="mt-1" variant="success"
-              @click="this.routeToAnnouncements">Duyurular
+    <b-button class="mt-1" variant="success">
+      <NuxtLink class="nuxtlink nav-link" to="/duyurular">Duyurular</NuxtLink>
     </b-button>
-
     <div class="pb-3 mt-3">
       İkv Forumdaki yüklediğin fotoğrafları görmek ister misin?
       Aşağıya ikv forum kullanıcı adını yaz!
@@ -103,5 +99,12 @@ export default {
   color: white;
   text-decoration: none;
   font-family: 'Courier New';
+}
+
+.nuxtlink {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+  padding: 0;
+  margin: 0;
 }
 </style>
