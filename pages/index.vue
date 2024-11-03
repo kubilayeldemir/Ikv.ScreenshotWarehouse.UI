@@ -41,6 +41,9 @@
     <b-button class="mt-1" variant="success">
       <NuxtLink class="nuxtlink nav-link" to="/duyurular">Duyurular</NuxtLink>
     </b-button>
+    <b-button class="mt-1" variant="success">
+      <NuxtLink class="nuxtlink nav-link" to="/sohbet">Sohbet (YENİ)</NuxtLink>
+    </b-button>
     <div class="pb-3 mt-3">
       İkv Forumdaki yüklediğin fotoğrafları görmek ister misin?
       Aşağıya ikv forum kullanıcı adını yaz!
